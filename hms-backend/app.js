@@ -5,16 +5,14 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mysql = require('mysql');
 var cors = require('cors');
-var port = 3001; //process.env.PORT || was 3000
+var port = 3001
 
 var con = mysql.createConnection({
   host: 'localhost',
-  user: 'root',
-  password: 'root',
-  database: 'wecare',
+  user: 'hathalye7',
+  password: 'hrishikesh',
+  database: 'HMS',
   multipleStatements: true
-  //port: 3001,
-  //socketPath: '/private/tmp/mysql.sock'
 });
 
 con.connect(function (err) {
@@ -39,11 +37,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(cors());
 // app.use('/', indexRouter);
 // app.use('/users', usersRouter);
-
-app.use(cors());
 
 app.get('/checkIfPatientExists', (req, res) => {
   let params = req.query;
@@ -65,7 +61,7 @@ app.get('/checkIfDocExists', (req, res) => {
   let params = req.query;
   let email = params.email;
   con.query(`SELECT * 
-             FROM DoctorNurse  
+             FROM Doctor
              WHERE email = "${email}"`, function (error, results, fields) {
     if (error) throw error;
     else {
@@ -89,9 +85,9 @@ app.get('/checkIfApptExists', (req, res) => {
   let sql_start = `CONVERT('${startTime}', TIME)`;
 
   con.query(`SELECT * 
-             FROM PatientsSeeAppointments, Appointment  
+             FROM PatientsAttendAppointments, Appointment  
              WHERE patient = "${email}" AND
-             appt = uid AND
+             appt = id AND
              date = ${sql_date} AND
              starttime = ${sql_start}`, function (error, results, fields) {
     if (error) throw error;
@@ -120,11 +116,10 @@ app.get('/OneHistory', (req, res) => {
   let params = req.query;
   let email = params.patientEmail;
   console.log(email);
-    let statement = `SELECT medication,gender,name,email,
-                    address,conditions,surgeries,GROUP_CONCAT(allergy SEPARATOR ', ') AS allergies
-                    FROM patientsfillhistory,patient,medicalhistory,allergy
-                    WHERE allergy.medhistory=uid AND patientsfillhistory.medhistory=uid
-                    AND patient=email AND email = ` + email + ` GROUP BY email`;
+    let statement = `SELECT gender,name,email,address,conditions,surgeries,medication
+                    FROM PatientsFillHistory,Patient,MedicalHistory
+                    WHERE PatientsFillHistory.history=id
+                    AND patient=email AND email = ` + email;
   con.query(statement, function (error, results, fields) {
     if (error) throw error;
     else {
@@ -142,9 +137,10 @@ app.get('/makeAccount', (req, res) => {
   let email = ah.email;
   let password = ah.password;
   let address = ah.address;
+  let gender = ah.gender;
 
-  let sql_statement = `INSERT INTO Patient (email, password, name, address) 
-                       VALUES ` + `("${email}", "${password}", "${name}", "${address}")`;
+  let sql_statement = `INSERT INTO Patient (email, password, name, address, gender) 
+                       VALUES ` + `("${email}", "${password}", "${name}", "${address}", "${gender}")`;
   console.log(sql_statement);
 
   con.query(sql_statement, function (error, results, fields) {
@@ -166,10 +162,10 @@ app.get('/makeDocAccount', (req, res) => {
   let email = params.email;
   let password = params.password;
   let gender = params.gender;
-  let uid = params.uid;
+  // let uid = params.uid;
 
-  let sql_statement = `INSERT INTO DoctorNurse (email, gender, password, uid, name) 
-                       VALUES ` + `("${email}", "${gender}", "${password}", "${uid}", "${name}")`;
+  let sql_statement = `INSERT INTO Doctor (email, gender, password, name) 
+                       VALUES ` + `("${email}", "${gender}", "${password}", "${name}")`;
   console.log(sql_statement);
 
   con.query(sql_statement, function (error, results, fields) {
@@ -184,16 +180,16 @@ app.get('/makeDocAccount', (req, res) => {
   });
 });
 
+//Returns id of patient history
 app.get('/MedHistView', (req, res) => {
   let params = req.query;
   let patientName = "'%" + params.name + "%'";
   let secondParamTest = "" + params.variable;
   console.log(params);
-  //console.log(crap2);
     let statement = `SELECT name AS 'Name',
-                    patientsfillhistory.medhistory AS 'UID',
-                    email FROM Patient,patientsfillhistory
-                    WHERE Patient.email = patientsfillhistory.patient`;
+                    PatientsFillHistory.history AS 'ID',
+                    email FROM Patient,PatientsFillHistory
+                    WHERE Patient.email = PatientsFillHistory.patient`;
   if (patientName != "''")
     statement += " AND Patient.name LIKE " + patientName
   con.query(statement, function (error, results, fields) {
@@ -206,19 +202,20 @@ app.get('/MedHistView', (req, res) => {
   });
 });
 
+//Works
 app.get('/patientViewAppt', (req, res) => {
   let kill_me = req.query;
   let email = kill_me.email;
-  let statement = `SELECT PatientsSeeAppointments.appt as UID, 
-                          PatientsSeeAppointments.patient as user, 
-                          PatientsSeeAppointments.concerns as theConcerns, 
-                          PatientsSeeAppointments.symptoms as theSymptoms, 
+  let statement = `SELECT PatientsAttendAppointments.appt as ID, 
+                          PatientsAttendAppointments.patient as user, 
+                          PatientsAttendAppointments.concerns as theConcerns, 
+                          PatientsAttendAppointments.symptoms as theSymptoms, 
                           Appointment.date as theDate,
                           Appointment.starttime as theStart,
                           Appointment.endtime as theEnd
-                          FROM PatientsSeeAppointments, Appointment
-                          WHERE PatientsSeeAppointments.patient = "${email}" AND
-                          PatientsSeeAppointments.appt = Appointment.uid`;
+                          FROM PatientsAttendAppointments, Appointment
+                          WHERE PatientsAttendAppointments.patient = "${email}" AND
+                          PatientsAttendAppointments.appt = Appointment.id`;
   console.log(statement);
   con.query(statement, function (error, results, fields) {
     if (error) throw error;
@@ -235,12 +232,12 @@ app.get('/patientViewAppt', (req, res) => {
 app.get('/getDateTimeOfAppt', (req, res) => {
   console.log("sdhrhhrthrthryhr");
   let dead = req.query;
-  let uid = dead.uid;
+  let id = dead.id;
   let statement = `SELECT starttime as start, 
-                          endttime as end, 
+                          endtime as end, 
                           date as theDate 
                    FROM Appointment 
-                   WHERE uid = "${uid}"`;
+                   WHERE id = "${id}"`;
   console.log(statement);
   con.query(statement, function (error, results, fields) {
     if (error) throw error;
@@ -257,7 +254,7 @@ app.get('/getDateTimeOfAppt', (req, res) => {
 app.get('/checkIfHistory', (req, res) => {
     let params = req.query;
     let email = params.email;
-    let statement = "SELECT patient FROM patientsfillhistory WHERE patient = " + email;
+    let statement = "SELECT patient FROM PatientsFillHistory WHERE patient = " + email;
     con.query(statement, function (error, results, fields) {
         if (error) throw error;
         else {
@@ -299,7 +296,7 @@ app.post('/resetPasswordDoctor', (req, res) => {
   let oldPassword = "" + something.oldPassword;
   let newPassword = "" + something.newPassword;
 
-  let statement = `UPDATE DoctorNurse 
+  let statement = `UPDATE Doctor
                    SET password = "${newPassword}" 
                    WHERE email = "${email}" 
                    AND password = "${oldPassword}";`;
@@ -385,7 +382,7 @@ app.get('/checkDoclogin', (req, res) => {
   let email = params.email;
   let password = params.password;
   let sql_statement = `SELECT * 
-                       FROM DoctorNurse 
+                       FROM Doctor
                        WHERE email="${email}" AND password="${password}"`;
   console.log(sql_statement);
   con.query(sql_statement, function (error, results, fields) {
@@ -420,7 +417,7 @@ app.get('/addToPatientSeeAppt', (req, res) => {
   let concerns = params.concerns;
   let symptoms = params.symptoms;
 
-  let sql_try = `INSERT INTO PatientsSeeAppointments (patient, appt, concerns, symptoms) 
+  let sql_try = `INSERT INTO PatientsAttendAppointments (patient, appt, concerns, symptoms) 
                  VALUES ("${email}", ${appt_uid}, "${concerns}", "${symptoms}")`;
   console.log(sql_try);
   con.query(sql_try, function (error, results, fields) {
@@ -464,7 +461,7 @@ app.get('/schedule', (req, res) => {
 
 app.get('/genApptUID', (req, res) => {
   //query current max uid
-  con.query('SELECT uid FROM Appointment ORDER BY uid DESC LIMIT 1;', function (error, results, fields) {
+  con.query('SELECT id FROM Appointment ORDER BY id DESC LIMIT 1;', function (error, results, fields) {
     //console.log(query.sql);
     if (error) throw error;
     else {
@@ -515,9 +512,9 @@ app.post('/scheduleAppt', (req, res) => { // probably delete later
 app.get('/doctorViewAppt', (req, res) => {
   let a = req.query;
   let email = a.email;
-  let statement = `SELECT a.uid,a.date, a.starttime, a.status, p.name, psa.concerns, psa.symptoms
-  FROM Appointment a, PatientsSeeAppointments psa, Patient p
-  WHERE a.uid = psa.appt AND psa.patient = p.email`;
+  let statement = `SELECT a.id,a.date, a.starttime, a.status, p.name, psa.concerns, psa.symptoms
+  FROM Appointment a, PatientsAttendAppointments psa, Patient p
+  WHERE a.id = psa.appt AND psa.patient = p.email`;
   console.log(statement);
   con.query(statement, function (error, results, fields) {
     if (error) throw error;
@@ -534,7 +531,7 @@ app.get('/doctorViewAppt', (req, res) => {
 app.get('/deleteAppt', (req, res) => {
   let a = req.query;
   let uid = a.uid;
-  let statement = `DELETE FROM PatientsSeeAppointments p WHERE p.appt = ${uid}`;
+  let statement = `DELETE FROM PatientsAttendsAppointments p WHERE p.appt = ${uid}`;
   console.log(statement);
   con.query(statement, function (error, results, fields) {
     if (error) throw error;
@@ -588,9 +585,6 @@ app.get('/deleteAppt', (req, res) => {
 app.use(function (req, res, next) {
   next(createError(404));
 });
-
-
-
 
 con.query('SELECT * from Patient', function (err, users, fields) {
   if (err) throw err

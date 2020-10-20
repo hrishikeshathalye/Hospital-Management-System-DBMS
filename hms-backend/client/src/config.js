@@ -1,8 +1,8 @@
 let config = {
     host    : 'localhost',
-    user    : 'root',
-    password: 'kachow',
-    database: 'wecare'
+    user    : 'hathalye7',
+    password: 'hrishikesh',
+    database: 'HMS'
   };
   
 module.exports = config;  
