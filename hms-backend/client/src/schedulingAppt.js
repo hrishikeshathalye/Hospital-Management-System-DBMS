@@ -1,33 +1,14 @@
-import { grommet } from "grommet/themes";
-
-
-import React, { Component, Image, StyleSheet, useState } from 'react';
+import React, { Component } from 'react';
 import {
-  FormClose,
-  Notification,
-  FormDown,
   Schedule,
 } from 'grommet-icons';
-
-import logo from './logo.svg';
-
 import {
-  Collapsible,
-  Layer,
-  Grid,
-  ResponsiveContext,
   Box,
   Button,
   Heading,
-  Menu,
-  FormField,
   Form,
-  TextInput,
-  Select,
   Text,
-  RadioButtonGroup,
   TextArea,
-  RangeInput,
   Grommet,
   Calendar,
   DropButton,
@@ -35,10 +16,7 @@ import {
   Keyboard,
 
 } from 'grommet';
-
 import './App.css';
-import backdrop from './img/hmsbackdrop.jpg'
-
 const theme = {
   global: {
     colors: {
@@ -51,13 +29,11 @@ const theme = {
     },
   },
 };
-
 var theDate;
 var theTime;
 var endTime;
 var theConcerns;
 var theSymptoms;
-
 const AppBar = (props) => (
   <Box
     tag='header'
@@ -66,7 +42,6 @@ const AppBar = (props) => (
     justify='between'
     background='brand'
     pad={{ left: 'medium', right: 'small', vertical: 'small' }}
-    //elevation='medium'
     style={{ zIndex: '1' }}
     {...props} />
 );
@@ -153,14 +128,6 @@ const DropContent = ({ date: initialDate, time: initialTime, onClose }) => {
                 regexp: /^[0-5][0-9]$|^[0-9]$/,
                 placeholder: "mm"
               }
-              // ,
-              // { fixed: " " },
-              // {
-              //   length: 2,
-              //   options: ["am", "pm"],
-              //   regexp: /^[ap]m$|^[AP]M$|^[aApP]$/,
-              //   placeholder: "ap"
-              // }
             ]}
             value={time || initialTime}
             name="maskedInput"
@@ -228,12 +195,12 @@ const ConcernsTextArea = () => {
         height="xsmall"
         border={{ color: "brand", size: "small" }}
       >
-        <TextArea
-          placeholder="Enter your concerns..."
-          value={value}
-          onChange={onChange}
-          fill
-          required />
+      <TextArea
+        placeholder="Enter your concerns..."
+        value={value}
+        onChange={onChange}
+        fill
+        required />
       </Box>
     </Grommet>
   );
@@ -270,30 +237,19 @@ const INITIAL_STATE = {
   error: null,
 };
 
-
 export class SchedulingAppt extends Component {
   constuctor() {
-
   }
-
-
   render() {
     return (
       <Grommet theme={theme} full>
         <AppBar>
-          <Heading level='3' margin='none'>WeCare</Heading>
+          <Heading level='3' margin='none'>HMS</Heading>
         </AppBar>
         <Box align="center" pad="small" gap="small">
           <Form
             onSubmit={({ value }) => {
-              console.log("hi");
-              console.log(theTime);
-              console.log(theDate);
-              console.log(theConcerns);
-              console.log(theSymptoms);
-              console.log("no");
               //probably fetch uid here, add one
-
               fetch("http://localhost:3001/userInSession")
                 .then(res => res.json())
                 .then(res => {
@@ -303,7 +259,6 @@ export class SchedulingAppt extends Component {
                   console.log(email_in_use);
                   // console.log(JSON.stringify(res));
                   // console.log(res.data);
-                  console.log("eg");
                   fetch("http://localhost:3001/checkIfApptExists?email=" + email_in_use + "&startTime=" + theTime + "&date=" + theDate)
                     .then(res => res.json())
                     .then(res => {
@@ -315,23 +270,17 @@ export class SchedulingAppt extends Component {
                           .then(res => {
                             var string_json = JSON.stringify(res);
                             var uid_json = JSON.parse(string_json);
-                            let gen_uid = uid_json.uid;
+                            let gen_uid = uid_json.id;
                             console.log(gen_uid);
                             fetch("http://localhost:3001/schedule?time=" + theTime + "&endTime=" + endTime +
-                              "&date=" + theDate + "&concerns=" + theConcerns + "&symptoms=" + theSymptoms + "&uid=" + gen_uid);
-                            fetch("http://localhost:3001/addToPatientSeeAppt?email=" + email_in_use + "&uid=" + gen_uid +
+                              "&date=" + theDate + "&concerns=" + theConcerns + "&symptoms=" + theSymptoms + "&id=" + gen_uid);
+                            fetch("http://localhost:3001/addToPatientSeeAppt?email=" + email_in_use + "&id=" + gen_uid +
                               "&concerns=" + theConcerns + "&symptoms=" + theSymptoms);
                             window.alert("Appointment successfully scheduled!");
-                            //window.location = "/PatientsViewAppt";
                           });
-
-
-
                       }
                     });
                 });
-
-
             }}
           >
             <DateTimeDropButton>
@@ -340,20 +289,15 @@ export class SchedulingAppt extends Component {
             </ConcernsTextArea>
             <SymptomsTextArea>
             </SymptomsTextArea>
-
             <Button
-              label="attempt to schedule"
+              label="Attempt To Schedule"
               type="submit"
               primary
             />
-
           </Form>
         </Box>
-
-
       </Grommet>
     );
   }
 }
-
 export default SchedulingAppt;

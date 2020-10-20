@@ -1,33 +1,18 @@
-import React, { Component, Image, StyleSheet, useState } from 'react';
-import { FormClose, Notification, Aid } from 'grommet-icons';
-import logo from './logo.svg';
+import React, { Component} from 'react';
+import {Aid } from 'grommet-icons';
 
 import {
-  Collapsible,
-  Layer,
-  ResponsiveContext,
   Box,
   Button,
   Heading,
   Grommet,
-  Menu,
   FormField,
   Form,
-  TextInput,
-  Select,
   Text,
-  RadioButton,
   CheckBox,
-  RadioButtonGroup,
-  TextArea,
-  Range,
-  RangeInput
-
-
 } from 'grommet';
 
 import './App.css';
-import backdrop from './img/hmsbackdrop.jpg'
 
 const theme = {
   global: {
@@ -58,22 +43,7 @@ const INITIAL_STATE = {
   password: "",
   error: null,
 };
-
 export class MedHist extends Component {
-  constuctor() {
-
-    // let email_in_use = "";
-    // let password_in_use = "";
-  }
-
-  // getSession = _ => {
-  //   fetch("http://localhost:3001/userInSession")
-  //     .then(res => {
-  //       console.log(res);
-  //       console.log("eg");
-  //     });
-  // }
-
   state = {
     sulfaChecked: false,
     iodineChecked: false,
@@ -83,6 +53,7 @@ export class MedHist extends Component {
     aspirinChecked: false,
     penicillinChecked: false,
     latexChecked: false,
+    fluorideChecked: false,
     anemiaChecked: false,
     anxietyChecked: false,
     arthritisChecked: false,
@@ -117,7 +88,7 @@ export class MedHist extends Component {
       <Grommet theme={theme}>
         <Box fill>
           <AppBar>
-            <Heading level='3' margin='none'>WeCare</Heading>
+            <Heading level='3' margin='none'>HMS</Heading>
           </AppBar>
 
           <Box align="left" pad="small">
@@ -138,8 +109,6 @@ export class MedHist extends Component {
                     // console.log(res.data);
                     console.log("eg");
                   });
-
-
               }}>
               <FormField
                 checked={ampicillinChecked}
@@ -247,10 +216,7 @@ export class MedHist extends Component {
                 primary
               />
             </Form>
-
           </Box>
-
-
         </Box>
       </Grommet>
     );

@@ -1,20 +1,15 @@
-import React, { Component, Image, StyleSheet, Link } from 'react';
-import logo from './logo.svg';
+import React, { Component} from 'react';
+
 import {
     Box,
     Button,
     Heading,
     Grommet,
-    Menu,
     FormField,
-    TextInput,
-    Select,
     Form
-
 } from 'grommet';
 
 import './App.css';
-import backdrop from './img/hmsbackdrop.jpg'
 
 const theme = {
     global: {
@@ -26,14 +21,11 @@ const theme = {
       },
     },
   };
-
 export class ViewMedHist extends Component {
-
-
+    
     state = { medhiststate: [] }
 
     componentDidMount() {
-
         this.getNames("");
         console.log(this.state.names);
     }
@@ -63,7 +55,7 @@ export class ViewMedHist extends Component {
                 flex={false}
             >
                 <Heading level={3} margin='none'>
-                    <strong>WeCare</strong>
+                    <strong>HMS</strong>
                 </Heading>
 
             </Box>
@@ -92,10 +84,7 @@ export class ViewMedHist extends Component {
                     </table>
                 </div>
             </div>
-
         );
-
-
         return (
             <Grommet full={true}
             theme = {theme}>
@@ -110,14 +99,9 @@ export class ViewMedHist extends Component {
                         <Button type="submit" primary label="Submit" />
                     </Form>
                     <Body />
-
                 </Box>
             </Grommet>
         );
-
-
-
-
     }
 }
 

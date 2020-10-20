@@ -1,20 +1,12 @@
-import React, { Component, Image, StyleSheet, Link } from 'react';
-import logo from './logo.svg';
+import React, { Component} from 'react';
 import {
     Box,
     Button,
     Heading,
     Grommet,
-    Menu,
-    FormField,
-    TextInput,
-    Select,
-    Form
-
 } from 'grommet';
 
 import './App.css';
-import backdrop from './img/hmsbackdrop.jpg'
 
 const theme = {
     global: {
@@ -28,8 +20,6 @@ const theme = {
   };
 
 export class DocViewAppt extends Component {
-
-
     state = { apptlist: [] }
 
     componentDidMount() {
@@ -38,8 +28,7 @@ export class DocViewAppt extends Component {
     }
 
     getNames() {
-        
-        fetch('http://localhost:3001/doctorviewappt')
+        fetch('http://localhost:3001/doctorViewAppt')
         .then(res => res.json())
         .then(res => this.setState({ apptlist: res.data }));
     }
@@ -59,9 +48,8 @@ export class DocViewAppt extends Component {
                 flex={false}
             >
                 <Heading level={3} margin='none'>
-                    <strong>WeCare</strong>
+                    <strong>HMS</strong>
                 </Heading>
-
             </Box>
         );
 
@@ -72,40 +60,32 @@ export class DocViewAppt extends Component {
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>name</th>
-                                <th>date</th>
-                                <th>start time</th>
-                                <th>concerns</th>
-                                <th>symptoms</th>
-                                <th>status</th>
-
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Start Time</th>
+                                <th>Concerns</th>
+                                <th>Symptoms</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             {apptlist.map(appt =>
                                 <tr key={appt.name}>
-                                    <td>{appt.uid}</td>
+                                    <td>{appt.id}</td>
                                     <td>{appt.name}</td>
                                     <td>{appt.date.substring(0,10)} </td>
                                     <td>{appt.starttime}</td>
                                     <td>{appt.concerns}</td>
                                     <td>{appt.symptoms}</td>
                                     <td>{appt.status}</td>
-                                   {/*  <td>
-                                        <Button label="Add"></Button>
-                                   </td>*/}
                                     <td>
                                         <Button label="Delete"
                                         onClick = {() => {
-                                            fetch('http://localhost:3001/deleteAppt?uid='+ appt.uid)
+                                            fetch('http://localhost:3001/deleteAppt?uid='+ appt.id)
                                             .then(res => res.json())
-                                            
-
                                         }}
-                                        ></Button>
-                                        
+                                        ></Button>     
                                     </td> 
-                                    
                                 </tr>
                             )}
                         </tbody>
@@ -114,24 +94,15 @@ export class DocViewAppt extends Component {
             </div>
 
         );
-
-
         return (
             <Grommet full={true}
             theme = {theme}>
                 <Header />
                 <Box fill={true}>
-                    
-
                     <Body />
-
                 </Box>
             </Grommet>
         );
-
-
-
-
     }
 }
 

@@ -1,22 +1,14 @@
-import React, { Component, Image, StyleSheet, useState } from 'react';
-import logo from './logo.svg';
+import React, { Component, useState } from 'react';
 import {
   Box,
   Button,
   Heading,
   Grommet,
-  Menu,
-  FormField,
-  TextInput,
-  Select,
   Text,
   Grid
-
-
 } from 'grommet';
 
 import './App.css';
-import backdrop from './img/hmsbackdrop.jpg'
 
 const theme = {
   global: {
@@ -48,24 +40,23 @@ const SidebarButtons = () => {
     <Grommet full theme={theme}>
       <Box fill direction="row">
         <Box background="brand">
-          {["View Medical History", "View Appts", "Schedule Appt", "Settings", "Sign Out"].map(label => (
+          {["View Medical History", "View Appointments", "Schedule Appointment", "Settings", "Sign Out"].map(label => (
             <SidebarButton
               key={label}
               label={label}
               active={label === active}
               onClick={() => {
-                if (label === "Schedule Appt") {
+                if (label === "Schedule Appointment") {
                   window.location = "/scheduleAppt"
                 }
                 else if (label === "Sign Out") {
                   fetch("http://localhost:3001/endSession");
                   window.location = "/"
                 }
-                else if (label === "View Appts") {
+                else if (label === "View Appointments") {
                   window.location = "/PatientsViewAppt"
                 }
                 else if (label === "View Medical History") {
-
                   let email_in_use = "";
                   fetch("http://localhost:3001/userInSession")
                     .then(res => res.json())
@@ -73,15 +64,10 @@ const SidebarButtons = () => {
                       var string_json = JSON.stringify(res);
                       var email_json = JSON.parse(string_json);
                       email_in_use = email_json.email;
-                      console.log("email in use is :" + email_in_use);
+                      console.log("Email In Use Is :" + email_in_use);
                       window.location = "/ViewOneHistory/" + email_in_use;
                     });
-
-
                 }
-                // else if (label === "New Medical History") {
-                //   window.location = "/MedHist"
-                // }
                 else if (label === "Settings") {
                   window.location = "/Settings"
                 }
@@ -95,8 +81,7 @@ const SidebarButtons = () => {
   );
 };
 export class Home extends Component {
-
-
+  
   state = { names: [] }
 
   componentDidMount() {
@@ -111,7 +96,7 @@ export class Home extends Component {
       .then(res => this.setState({ names: res.data }));
   }
 
-  renderName = ({ name, email }) => <div key={email}>{name} {name}</ div>
+  renderName = ({ name, email }) => <div key={email}>{name} {name}</div>
 
   render() {
     const { names } = this.state;
@@ -128,7 +113,7 @@ export class Home extends Component {
         flex={false}
       >
         <Heading level={3} margin='none'>
-          <strong>WeCare</strong>
+          <strong>HMS</strong>
         </Heading>
 
       </Box>
@@ -160,7 +145,6 @@ export class Home extends Component {
 
     );
 
-
     return (
       <Grommet full={true}
         theme={theme} >
@@ -190,25 +174,15 @@ export class Home extends Component {
               align="center">
 
               <Box align="center" pad="large">
-                <img
-                  height="100"
-                  width="100"
-                  src={require('./img/Asset 3.png')} />
                 <Heading 
-                  color="#00739D">Welcome, patient.
+                  color="#00739D">Welcome Patient
                 </Heading>
               </Box>
             </Box>
           </Grid>
-
-
         </Box>
       </Grommet>
     );
-
-
-
-
   }
 }
 

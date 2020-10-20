@@ -1,38 +1,16 @@
-import React, { Component, Image, StyleSheet, useState } from 'react';
-import logo from './logo.svg';
+import React, { Component} from 'react';
 
 import {
-    FormClose,
-    Notification
-
-} from 'grommet-icons';
-
-import {
-    Collapsible,
-    Layer,
-    ResponsiveContext,
     Box,
     Button,
     Heading,
     Grommet,
-    Menu,
     FormField,
     Form,
-    TextInput,
-    Select,
     Text,
-    RadioButton,
-    CheckBox,
-    RadioButtonGroup,
-    TextArea,
-    Range,
-    RangeInput
-
-
 } from 'grommet';
 
 import './App.css';
-import backdrop from './img/hmsbackdrop.jpg'
 
 const theme = {
     global: {
@@ -66,16 +44,12 @@ const INITIAL_STATE = {
 export class DocSettings extends Component {
     constuctor() {
     }
-
-
     render() {
-
-
         return (
             <Grommet theme={theme} full>
                 <Box >
                     <AppBar>
-                        <Heading level='3' margin='none'>WeCare</Heading>
+                        <Heading level='3' margin='none'>HMS</Heading>
                     </AppBar>
 
                     <Form
@@ -89,7 +63,6 @@ export class DocSettings extends Component {
                             var email_json = JSON.parse(string_json);
                             email_in_use = email_json.email;
                             console.log(email_in_use);
-                            console.log("eg");
                           fetch("http://localhost:3001/resetPasswordDoctor?email=" + 
                           email_in_use + "&oldPassword=" + value.oldPassword + "&newPassword=" + 
                           value.newPassword, {method: 'POST'})
@@ -97,15 +70,15 @@ export class DocSettings extends Component {
                           .then(res => {
                             let didUpdate = res.data.affectedRows;
                             if(didUpdate === 0) {
-                                window.alert("oops, you enetered your old password incorrectly");
+                                window.alert("Old Password is wrong");
                             } else {
-                                window.alert("congrats! password reset was a success :)");
+                                window.alert("Password Reset Successful");
                             }
                           });
                           });
 
                     }}>
-                        <Text>Doc: change your password:</Text>
+                        <Text>Password Change</Text>
                         <FormField
                             type='password'
                             label="Old password"

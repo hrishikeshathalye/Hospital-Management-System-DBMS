@@ -1,6 +1,4 @@
-import React, { Component, Image, StyleSheet, useState } from 'react';
-import { FormClose, Notification } from 'grommet-icons';
-import logo from './logo.svg';
+import React, { Component} from 'react';
 
 import {
     Box,
@@ -14,7 +12,6 @@ import {
 } from 'grommet';
 
 import './App.css';
-import backdrop from './img/hmsbackdrop.jpg'
 
 const theme = {
     global: {
@@ -50,43 +47,31 @@ const INITIAL_STATE = {
 export class MakeDoc extends Component {
     constuctor() {
     }
-
     render() {
-
         return (
             <Grommet theme={theme} full>
                 <AppBar>
-                    <Heading level='3' margin='none'>WeCare</Heading>
+                    <Heading level='3' margin='none'>HMS</Heading>
                 </AppBar>
                 <Box fill align="center" justify="top">
-                    <Box align="center" pad="medium">
-                        <img
-                            height="100"
-                            width="100"
-                            src={require('./img/Asset 3.png')} />
-                    </Box>
                     <Box width="medium">
                     <Text color = "#AAAAAA">Doctor's registration form:</Text>
-
                         <Form
                             onReset={event => console.log(event)}
                             method="post"
                             onSubmit={({ value }) => {
                                 console.log("Submit", value);
-
+                                console.log(value.email)
                                 fetch("http://localhost:3001/checkIfDocExists?email=" + value.email)
                                     .then(res => res.json())
                                     .then(res => {
-                                        console.log("uoo");
                                         console.log(res.data[0]);
-                                        console.log("sdadsada");
-
                                         if ((res.data[0])) {
                                             window.alert("A doctor is already associated with that email.");
-                                            console.log("no user founds");
+                                            console.log("no user found");
                                         } else {
                                             fetch("http://localhost:3001/makeDocAccount?name=" + value.firstName + "&lastname=" + value.lastName + "&email=" + value.email
-                                                + "&password=" + value.password + "&uid=" + value.uid + "&gender=" + value.gender);
+                                                + "&password=" + value.password + "&gender=" + value.gender);
                                             window.location = "/DocHome";
                                         }
                                     });
@@ -103,11 +88,6 @@ export class MakeDoc extends Component {
                                 required
                                 placeholder="Please enter your last name."
                                 validate={{ regexp: /^[a-z]/i }} />
-                            <FormField
-                                label="Employee ID"
-                                name="uid"
-                                placeholder="Please enter your employee id."
-                                required />
                             <FormField
                                 label="Email"
                                 name="email"

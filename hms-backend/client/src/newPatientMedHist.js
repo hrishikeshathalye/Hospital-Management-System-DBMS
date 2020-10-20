@@ -1,38 +1,18 @@
-import React,{Component,Image,StyleSheet, useState} from 'react';
-import logo from './logo.svg';
-
-import { 
-  FormClose, 
-  Notification 
-
-} from 'grommet-icons';
+import React,{Component} from 'react';
 
 import {
-  Collapsible, 
-  Layer, 
-  ResponsiveContext,
   Box,
   Button,
   Heading,
   Grommet,
-  Menu,
   FormField,
   Form,
-  TextInput,
   Select,
   Text,
-  RadioButton,
   CheckBox,
-  RadioButtonGroup,
-  TextArea,
-  Range,
-  RangeInput
-  
-
 } from 'grommet';
 
 import './App.css';
-import backdrop from './img/hmsbackdrop.jpg'
 
 const theme = {
   global: {
@@ -62,7 +42,6 @@ const INITIAL_STATE = {
   password: "",
   error: null, 
 };
-
 export class NewMedHist extends Component{
   constuctor() {
   }
@@ -99,7 +78,7 @@ export class NewMedHist extends Component{
     <Grommet theme={theme} full>
       <Box >
         <AppBar>
-          <Heading level='3' margin='none'>WeCare</Heading>
+          <Heading level='3' margin='none'>HMS</Heading>
         </AppBar>
 
         <Form          
@@ -114,7 +93,6 @@ export class NewMedHist extends Component{
 
         <Box align = "left" pad = "small">
         <Text >Check any known allergies:</Text>
-        
         
         <FormField
           checked={aspirinChecked}
@@ -199,9 +177,6 @@ export class NewMedHist extends Component{
               label="submit"
               primary />
           </Form>
-
-
-
       </Box>
     </Grommet>
     );

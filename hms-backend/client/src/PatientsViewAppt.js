@@ -1,38 +1,13 @@
-import React, { Component, Image, StyleSheet, useState } from 'react';
-import logo from './logo.svg';
+import React, { Component} from 'react';
 
 import {
-    FormClose,
-    Notification
-
-} from 'grommet-icons';
-
-import {
-    Collapsible,
-    Layer,
-    ResponsiveContext,
     Box,
-    Button,
     Heading,
     Grommet,
-    Menu,
-    FormField,
     Form,
-    TextInput,
-    Select,
-    Text,
-    RadioButton,
-    CheckBox,
-    RadioButtonGroup,
-    TextArea,
-    Range,
-    RangeInput
-
-
 } from 'grommet';
 
 import './App.css';
-import backdrop from './img/hmsbackdrop.jpg'
 
 const theme = {
     global: {
@@ -62,7 +37,6 @@ const INITIAL_STATE = {
     password: "",
     error: null,
 };
-
 export class PatientsViewAppointments extends Component {
     state = { appointmentsState: [] }
 
@@ -89,19 +63,13 @@ export class PatientsViewAppointments extends Component {
                 fetch('http://localhost:3001/patientViewAppt?email=' + email_in_use)
                     .then(res => res.json())
                     .then(res => {
-
                         this.setState({ appointmentsState: res.data });
                         //console.log(JSON.stringify);
                     });
             });
-
-
-
     }
-
     render() {
         const { appointmentsState } = this.state;
-
         const Body = () => (
             <div className="container">
                 <div className="panel panel-default p50 uth-panel">
@@ -161,14 +129,12 @@ export class PatientsViewAppointments extends Component {
                     </table>
                 </div>
             </div>
-
         );
-
         return (
             <Grommet theme={theme} full>
                 <Box >
                     <AppBar>
-                        <Heading level='3' margin='none'>WeCare</Heading>
+                        <Heading level='3' margin='none'>HMS</Heading>
                     </AppBar>
                     <Body />
                     <Form
@@ -212,8 +178,6 @@ export class PatientsViewAppointments extends Component {
                             primary
                         /> */}
                     </Form>
-
-
                 </Box>
             </Grommet>
         );

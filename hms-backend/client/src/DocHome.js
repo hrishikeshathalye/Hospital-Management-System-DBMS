@@ -1,24 +1,14 @@
-import React, { Component, Image, StyleSheet, useState } from 'react';
-import logo from './logo.svg';
+import React, { Component, useState } from 'react';
 import {
     Box,
     Button,
     Heading,
     Grommet,
-    Menu,
-    FormField,
-    TextInput,
-    Select,
-    grommet,
     Grid,
     Text,
-    Form,
-
-
 } from 'grommet';
 
 import './App.css';
-import backdrop from './img/hmsbackdrop.jpg'
 
 const theme = {
     global: {
@@ -85,7 +75,6 @@ export class DocHome extends Component {
     state = { medhiststate: [] }
 
     componentDidMount() {
-
         this.getNames("");
         console.log(this.state.names);
     }
@@ -113,7 +102,7 @@ export class DocHome extends Component {
                 flex={false}
             >
                 <Heading level={3} margin='none'>
-                    <strong>WeCare</strong>
+                    <strong>HMS</strong>
                 </Heading>
 
             </Box>
@@ -172,27 +161,15 @@ export class DocHome extends Component {
                             justify="top"
                             align="center">
                             <Box align="center" pad="large">
-                                <img
-                                    height="100"
-                                    width="100"
-                                    src={require('./img/Asset 3.png')} />
                                 <Heading
-                                    color="#00739D">Welcome, doc.
+                                    color="#00739D">Welcome Doctor
                                 </Heading>
                             </Box>
                         </Box>
                     </Grid>
-
-
-
-
                 </Box>
             </Grommet>
         );
-
-
-
-
     }
 }
 

@@ -1,28 +1,16 @@
-import React, { Component, Image, StyleSheet } from 'react';
-import logo from './logo.svg';
+import React, { Component} from 'react';
+
 import {
     Box,
-    Button,
     Heading,
     Grommet,
-    Menu,
-    FormField,
-    TextInput,
-    Select,
-    Form,
-    Grid,
     Table,
     TableBody,
     TableCell,
-    TableFooter,
-    TableHeader,
-    TableRow,
-    Text
-
+    TableRow
 } from 'grommet';
 
 import './App.css';
-import backdrop from './img/hmsbackdrop.jpg'
 
 const theme = {
     global: {
@@ -36,18 +24,12 @@ const theme = {
 };
 
 export class ViewOneHistory extends Component {
-
-
     state = { medhiststate: [] }
-
     componentDidMount() {
         const { email } = this.props.match.params;
         console.log("Viewed patient profile email is : "+ email);
-
             this.checkEmail(email);
             this.getHistory(email);
-
-        
     }
 
     checkEmail(email) {
@@ -68,10 +50,8 @@ export class ViewOneHistory extends Component {
         .then(res => res.json())
             .then(res => this.setState({ medhiststate: res.data }));
     }
-
     render() {
         const { medhiststate } = this.state;
-
         const Header = () => (
             <Box
                 tag='header'
@@ -84,12 +64,10 @@ export class ViewOneHistory extends Component {
                 flex={false}
             >
                 <Heading level={3} margin='none'>
-                    <strong>WeCare</strong>
+                    <strong>HMS</strong>
                 </Heading>
-
             </Box>
         );
-
         const Body = () => (
             <div className="container">
                 <div className="panel panel-default p50 uth-panel">
@@ -164,38 +142,21 @@ export class ViewOneHistory extends Component {
                                     <TableCell>{patient.medication}
                                     </TableCell>
                                 </TableRow>
-                                <TableRow><TableCell></TableCell></TableRow>
-                                <TableRow>                                    <TableCell><strong>Allergies</strong>
-                                     
-                                    </TableCell>
-                                    <TableCell>{patient.allergies}</TableCell>
-                                </TableRow>
                             </TableBody>
                         </Table>
-                            )}
+                    )}
                 </div>
             </div>
 
         );
-
-
         return (
             <Grommet full={true} theme={theme}>
                 <Box fill={true}>
-
-                    
-
                     <Header />
                     <Body />
-
                 </Box>
             </Grommet>
         );
-
-
-
-
     }
 }
-
 export default ViewOneHistory;

@@ -1,40 +1,16 @@
-import React, { Component, Image, StyleSheet, useState } from 'react';
-import logo from './logo.svg';
-import brandImage from './img/Asset 3.png';
+import React, { Component} from 'react';
 import { withRouter } from 'react-router-dom';
-
 import {
-  FormClose,
-  Notification,
-  User,
-
-
-} from 'grommet-icons';
-
-import {
-  Collapsible,
-  Layer,
-  ResponsiveContext,
   Box,
   Button,
   Heading,
   Grommet,
-  Menu,
   FormField,
   Form,
-  TextInput,
-  Select,
-  Text,
   CheckBox,
-  RadioButtonGroup,
-  TextArea,
-  RangeInput,
-
-
 } from 'grommet';
 
 import './App.css';
-import backdrop from './img/hmsbackdrop.jpg'
 
 const theme = {
   global: {
@@ -80,12 +56,12 @@ class LogIn extends Component {
   }
 
   render() {
-    const { isDoctor } = this.state; // If doctor, will wuery from doctor table
+    const { isDoctor } = this.state; // If doctor, will query from doctor table
 
     return (
       <Grommet theme={theme} full>
         <AppBar>
-          <Heading level='3' margin='none'>WeCare</Heading>
+          <Heading level='3' margin='none'>HMS</Heading>
         </AppBar>
 
         <Box
@@ -93,12 +69,6 @@ class LogIn extends Component {
           align="center"
           justify="top"
           pad="medium">
-          <Box align="center">
-            <img
-              height="100"
-              width="100"
-              src={require('./img/Asset 3.png')} />
-          </Box>
           <Box
             width="medium"
             pad="medium">
@@ -113,8 +83,7 @@ class LogIn extends Component {
                     .then(res => res.json())
                     .then(res => {
                       if (res.data.length === 0) {
-                        window.alert("ouch, invalid log in");
-                        console.log("nope");
+                        window.alert("Invalid Log In");
                       } else {
                         window.location = "DocHome";
                         console.log(res.data);
@@ -126,8 +95,7 @@ class LogIn extends Component {
                     .then(res => res.json())
                     .then(res => {
                       if (res.data.length === 0) {
-                        console.log("nope");
-                        window.alert("ouch, invalid log in");
+                        window.alert("Invalid Log In");
                       } else {
                         window.location = "/Home";
                         console.log(res.data);
@@ -136,7 +104,6 @@ class LogIn extends Component {
                 }
               }
               }>
-
               <FormField
                 color="#00739D"
                 label="Email"
@@ -154,19 +121,18 @@ class LogIn extends Component {
               <FormField
                 component={CheckBox}
                 checked={isDoctor}
-                margin="small"
+                margin="large"
                 label="I'm a doctor"
                 name="isDoc"
                 onChange={(event) => {
                   this.setState({ isDoctor: event.target.checked })
-                  console.log("toggled");
                 }}
-
               />
               <Box direction="column" align="center" >
-                <Button type="submit" label="Log In" fill="horizontal" primary />
+                <Button style={{ textAlign: 'center' , margin:'1rem'}}
+                 type="submit" label="Log In" fill="horizontal" primary />
                 <Button label="Create Account"
-                  style={{ textAlign: 'center' }}
+                  style={{ textAlign: 'center' , margin:'0.5rem'}}
                   fill="horizontal"
                   href="/createAcc" />
               </Box>
@@ -177,5 +143,4 @@ class LogIn extends Component {
     );
   }
 }
-
 export default withRouter(LogIn);
