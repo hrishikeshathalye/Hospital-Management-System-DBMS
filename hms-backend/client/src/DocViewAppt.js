@@ -11,7 +11,7 @@ import './App.css';
 const theme = {
     global: {
       colors: {
-        brand: '#00739D',
+        brand: '#000000',
       },
       font: {
         family: 'Lato',
@@ -24,7 +24,6 @@ export class DocViewAppt extends Component {
 
     componentDidMount() {
         this.getNames();
-      
     }
 
     getNames() {
@@ -35,7 +34,6 @@ export class DocViewAppt extends Component {
 
     render() {
         const { apptlist } = this.state;
-
         const Header = () => (
             <Box
                 tag='header'
@@ -47,9 +45,7 @@ export class DocViewAppt extends Component {
                 align='center'
                 flex={false}
             >
-                <Heading level={3} margin='none'>
-                    <strong>HMS</strong>
-                </Heading>
+                <a style={{ color: 'inherit', textDecoration: 'inherit'}} href="/"><Heading level='3' margin='none'>HMS</Heading></a>
             </Box>
         );
 
@@ -79,10 +75,17 @@ export class DocViewAppt extends Component {
                                     <td>{appt.symptoms}</td>
                                     <td>{appt.status}</td>
                                     <td>
+                                        <Button label="Diagnose"
+                                        href={`/Diagnose/${appt.id}`}
+                                        ></Button>     
+                                    </td> 
+                                    <td>
                                         <Button label="Delete"
                                         onClick = {() => {
                                             fetch('http://localhost:3001/deleteAppt?uid='+ appt.id)
-                                            .then(res => res.json())
+                                            .then(res => res.json()).then(()=>{
+                                                window.location.reload();
+                                            })
                                         }}
                                         ></Button>     
                                     </td> 

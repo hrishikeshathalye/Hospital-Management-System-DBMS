@@ -1,5 +1,4 @@
 import React, { Component} from 'react';
-
 import {
   Box,
   Button,
@@ -7,8 +6,7 @@ import {
   Grommet,
   FormField,
   Form,
-  Text,
-
+  Text
 } from 'grommet';
 
 import './App.css';
@@ -16,9 +14,7 @@ import './App.css';
 const theme = {
   global: {
     colors: {
-      brand: '#00739D',
-      focus: "#00739D",
-      active: "#00739D",
+      brand: '#000000',
     },
     font: {
       family: 'Lato',
@@ -37,13 +33,6 @@ const AppBar = (props) => (
     style={{ zIndex: '1' }}
     {...props} />
 );
-
-const INITIAL_STATE = {
-  email: "",
-  password: "",
-  error: null,
-};
-
 export class CreateAccount extends Component {
   constuctor() {
   }
@@ -53,7 +42,7 @@ export class CreateAccount extends Component {
     return (
       <Grommet theme={theme} full>
         <AppBar>
-          <Heading level='3' margin='none'>HMS</Heading>
+          <a style={{ color: 'inherit', textDecoration: 'inherit'}} href="/"><Heading level='3' margin='none'>HMS</Heading></a>
         </AppBar>
         <Box fill align="center" justify="top">
           <Box width="medium">
@@ -74,7 +63,8 @@ export class CreateAccount extends Component {
                       console.log("no user found");
                     } else {
                       fetch("http://localhost:3001/makeAccount?name=" + value.firstName + "&lastname=" + value.lastName + "&email=" + value.email
-                        + "&password=" + value.password + "&address=" + value.address + "&gender=" + value.gender);
+                        + "&password=" + value.password + "&address=" + value.address + "&gender=" + value.gender
+                        + "&conditions=" + value.conditions + "&medications=" + value.medications + "&surgeries=" + value.surgeries);
                       window.location = "/Home";
                     }
                   });
@@ -82,14 +72,14 @@ export class CreateAccount extends Component {
               <FormField
                 label="First Name"
                 name="firstName"
-                placeholder="First name:"
+                placeholder="First name"
                 required
                 validate={{ regexp: /^[a-z]/i }} />
               <FormField
                 label="Last Name"
                 name="lastName"
                 required
-                placeholder="Last Name:"
+                placeholder="Last Name"
                 validate={{ regexp: /^[a-z]/i }} />
               <FormField
                 label="Gender"
@@ -97,20 +87,35 @@ export class CreateAccount extends Component {
                 placeholder="Female or Male"
                 required />
               <FormField
+                label="Medical History - Conditions"
+                name="conditions"
+                placeholder="Conditions"
+               />
+              <FormField
+                label="Medical History - Surgeries"
+                name="surgeries"
+                placeholder="Surgeries"
+               />
+              <FormField
+                label="Medical History - Medications"
+                name="medications"
+                placeholder="Medications"
+               />
+              <FormField
                 label="Address"
                 name="address"
-                placeholder="Address:"
+                placeholder="Address"
                 required />
               <FormField
                 label="Email"
                 name="email"
                 type="email"
-                placeholder="Email:"
+                placeholder="Email"
                 required />
               <FormField
                 label="Password"
                 name="password"
-                placeholder="Password:"
+                placeholder="Password"
                 required
                 validate={{ regexp: /^(?=.{8,})(?=.*[0-9]{2})/, message: "@ least 8 characters containing 2 digits" }} />
               <Box direction="row" align="center" >

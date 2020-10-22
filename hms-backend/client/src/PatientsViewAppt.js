@@ -4,7 +4,7 @@ import {
     Box,
     Heading,
     Grommet,
-    Form,
+    Button
 } from 'grommet';
 
 import './App.css';
@@ -12,7 +12,7 @@ import './App.css';
 const theme = {
     global: {
         colors: {
-            brand: '#00739D',
+            brand: '#000000',
         },
         font: {
             family: 'Lato',
@@ -32,39 +32,24 @@ const AppBar = (props) => (
         {...props} />
 );
 
-const INITIAL_STATE = {
-    email: "",
-    password: "",
-    error: null,
-};
 export class PatientsViewAppointments extends Component {
     state = { appointmentsState: [] }
-
     componentDidMount() {
-
         this.getNames("");
-        console.log(this.state.names);
     }
-
     getNames(value) {
         let patName = value;
         console.log(patName);
-
         fetch("http://localhost:3001/userInSession")
             .then(res => res.json())
             .then(res => {
                 var string_json = JSON.stringify(res);
                 var email_json = JSON.parse(string_json);
                 let email_in_use = email_json.email;
-                console.log(email_in_use);
-                // console.log(JSON.stringify(res));
-                // console.log(res.data);
-                console.log("eg");
                 fetch('http://localhost:3001/patientViewAppt?email=' + email_in_use)
                     .then(res => res.json())
                     .then(res => {
                         this.setState({ appointmentsState: res.data });
-                        //console.log(JSON.stringify);
                     });
             });
     }
@@ -76,9 +61,9 @@ export class PatientsViewAppointments extends Component {
                     <table className="table table-hover">
                         <thead>
                             <tr>
-                            <th>Date of Appointment:</th>
-                                <th>Start Time:</th>
-                                <th>End Time:</th>
+                            <th>Date of Appointment</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
                                 <th>Concerns</th>
                                 <th>Symptoms</th>
                             </tr>
@@ -86,43 +71,26 @@ export class PatientsViewAppointments extends Component {
                         <tbody>
                             {appointmentsState.map(patient =>
                                 <tr key={patient.user}>
-                                    {/* <td>|____________________
-                                        <script type="text/javascript">
-                                            fetch('http://localhost:3001/getDateTimeOfAppt?uid=' + patient.UID);
-
-                                        </script>
-                                    </td> */}
                                     <td align="center" >
-
-                                        {patient.theDate.substring(0, 10)
-                                            // (async function () {
-                                            //     let me = "dd";
-                                            //     return fetch('http://localhost:3001/getDateTimeOfAppt?uid=' + patient.UID)
-                                            //         .then(res => res.json())
-                                            //         .then(res => {
-                                            //             console.log("sasa");
-                                            //             console.log(me);
-                                            //             console.log("sasa");
-
-                                            //             me = res.data[0].end;
-                                            //          ß   console.log(res.data[0].end);
-                                            //             console.log(res.data[0]);
-                                            //             me = res.data[0].end;
-                                            //             console.log(me);
-                                            //             return res.data[0].end
-                                            //         });
-                                            //         // console.log("here");
-
-                                            //         // return me;
-                                            // })()
-                                        }
+                                        {patient.theDate.substring(0, 10)}
                                     </td>
                                     <td align="center" >{patient.theStart.substring(0, 5)}</td>
                                     <td align="center" >{patient.theEnd.substring(0, 5)}</td>
                                     <td align="center">{patient.theConcerns} </td>
-                                    <td align="center">{patient.theSymptoms}
+                                    <td align="center">{patient.theSymptoms}</td>
+                                    <td>
+                                        <Button label="See Diagnosis"
+                                        href={`/showDiagnoses/${patient.ID}`}
+                                        ></Button>     
+                                    </td> 
+                                    <td>
+                                        <Button label="Delete"
+                                        onClick = {() => {
+                                            fetch('http://localhost:3001/deleteAppt?uid='+ patient.ID)
+                                            .then(res => res.json())
+                                        }}
+                                        ></Button>     
                                     </td>
-
                                 </tr>
                             )}
                         </tbody>
@@ -134,50 +102,9 @@ export class PatientsViewAppointments extends Component {
             <Grommet theme={theme} full>
                 <Box >
                     <AppBar>
-                        <Heading level='3' margin='none'>HMS</Heading>
+                    <a style={{ color: 'inherit', textDecoration: 'inherit'}} href="/"><Heading level='3' margin='none'>HMS</Heading></a>
                     </AppBar>
                     <Body />
-                    <Form
-                    // onSubmit={({ value }) => {
-                    //     let email_in_use = "";
-                    //     console.log(value);
-                    //     fetch("http://localhost:3001/userInSession")
-                    //       .then(res => res.json())
-                    //       .then(res => {
-                    //         var string_json = JSON.stringify(res);
-                    //         var email_json = JSON.parse(string_json);
-                    //         email_in_use = email_json.email;
-                    //         console.log(email_in_use);
-                    //         console.log("eg");
-                    //       fetch("http://localhost:3001/resetPasswordPatient?email=" + 
-                    //       email_in_use + "&oldPassword=" + value.oldPassword + "&newPassword=" + 
-                    //       value.newPassword, {method: 'POST'});
-                    //       });
-                    //     //   fetch("http://localhost:3001/resetPasswordPatient?email=" + 
-                    //     //   email_in_use + "&oldPassword=" + value.oldPassword + "&newPassword=" + 
-                    //     //   value.newPassword, {method: 'POST'});
-
-
-                    // }}
-                    >
-                        {/* <Text>Change your password:</Text>
-                        <FormField
-                            type='password'
-                            label="Old password"
-                            name="oldPassword"
-                            required
-                        />
-                        <FormField
-                            label="New password"
-                            name="newPassword"
-                            required
-                        />
-                        <Button
-                            type="submit"
-                            label="try to change"
-                            primary
-                        /> */}
-                    </Form>
                 </Box>
             </Grommet>
         );

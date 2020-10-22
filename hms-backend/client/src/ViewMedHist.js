@@ -14,7 +14,7 @@ import './App.css';
 const theme = {
     global: {
       colors: {
-        brand: '#00739D',
+        brand: '#000000',
       },
       font: {
         family: 'Lato',
@@ -32,7 +32,7 @@ export class ViewMedHist extends Component {
 
     getNames(value) {
         let patName = " ";
-        if (value != undefined)
+        if (value !== undefined)
             patName = value;
         console.log(patName);
         fetch('http://localhost:3001/MedHistView?name='+ patName + '&variable=words')
@@ -54,26 +54,24 @@ export class ViewMedHist extends Component {
                 align='center'
                 flex={false}
             >
-                <Heading level={3} margin='none'>
-                    <strong>HMS</strong>
-                </Heading>
+               <a style={{ color: 'inherit', textDecoration: 'inherit'}} href="/"><Heading level='3' margin='none'>HMS</Heading></a>
 
             </Box>
         );
 
         const Body = () => (
-            <div className="container">
+            <div className="container" style={{width:"100vw"}}>
                 <div className="panel panel-default p50 uth-panel">
                     <table className="table table-hover">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Profile</th>
+                                <th style={{width:"50vw"}}>Name</th>
+                                <th style={{width:"50vw"}}>Profile</th>
                             </tr>
-                        </thead>
+                        </thead> 
                         <tbody>
                             {medhiststate.map(patient =>
-                                <tr key={patient.id}>
+                                <tr key={patient.id} style={{textAlign:"center"}}>
                                     <td>{patient.Name} </td>
                                     <td>
                                         <Button label="Medical Profile" href={'/ViewOneHistory/' + patient.email}/>
@@ -89,14 +87,16 @@ export class ViewMedHist extends Component {
             <Grommet full={true}
             theme = {theme}>
                 <Header />
-                <Box fill={true}>
+                <Box fill={true} align="center">
                     <Form
                         onSubmit={({ value }) => {
-                            console.log("Submit", value);
                             this.getNames(value.email);
                         }}>
-                        <FormField name="email" label="Search by Name" />
-                        <Button type="submit" primary label="Submit" />
+                        <h4 style={{textAlign:"center", marginBottom:"0"}}>Search By Name</h4>
+                        <FormField name="email" align="center" />
+                        <div align="center">
+                            <Button type="submit" primary label="Submit" />
+                        </div>
                     </Form>
                     <Body />
                 </Box>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import {
   Schedule,
 } from 'grommet-icons';
@@ -14,15 +14,15 @@ import {
   DropButton,
   MaskedInput,
   Keyboard,
-
+  Select
 } from 'grommet';
 import './App.css';
 const theme = {
   global: {
     colors: {
-      brand: '#00739D',
-      focus: "#00739D",
-      active: "#00739D",
+      brand: '#000000',
+      focus: "#000000",
+      active: "#000000",
     },
     font: {
       family: 'Lato',
@@ -34,6 +34,7 @@ var theTime;
 var endTime;
 var theConcerns;
 var theSymptoms;
+var theDoc;
 const AppBar = (props) => (
   <Box
     tag='header'
@@ -185,7 +186,7 @@ const ConcernsTextArea = () => {
 
   const onChange = event => {
     setValue(event.target.value);
-    theConcerns = value;
+    theConcerns = event.target.value;
   };
 
   return (
@@ -211,7 +212,7 @@ const SymptomsTextArea = () => {
 
   const onChange = event => {
     setValue(event.target.value);
-    theSymptoms = value;
+    theSymptoms = event.target.value;
   };
 
   return (
@@ -231,11 +232,36 @@ const SymptomsTextArea = () => {
   );
 };
 
-const INITIAL_STATE = {
-  email: "",
-  password: "",
-  error: null,
-};
+function DoctorsDropdown() {
+  const [value, setValue] = useState();
+  const [doctorsList, setList] = useState([]);
+  useEffect(() => {    
+    fetch("http://localhost:3001/docInfo")
+    .then(res => res.json())
+    .then(res => {
+      let arr = []
+      res.data.forEach(i => {
+        let tmp = `${i.name} (${i.email})`;
+        arr.push(tmp);
+      });
+      setList(arr);
+    });
+  }, []);
+  const onChange = event => {
+    setValue(event.value);
+    let doc = event.value.match(/\((.*)\)/)[1];
+    theDoc = doc;
+  };
+  return (
+    <Select
+      options={doctorsList}
+      value={value}
+      placeholder="Select Doctor"
+      onChange={onChange} fill
+      required
+    />
+  );
+}
 
 export class SchedulingAppt extends Component {
   constuctor() {
@@ -244,7 +270,7 @@ export class SchedulingAppt extends Component {
     return (
       <Grommet theme={theme} full>
         <AppBar>
-          <Heading level='3' margin='none'>HMS</Heading>
+        <a style={{ color: 'inherit', textDecoration: 'inherit'}} href="/"><Heading level='3' margin='none'>HMS</Heading></a>
         </AppBar>
         <Box align="center" pad="small" gap="small">
           <Form
@@ -256,9 +282,6 @@ export class SchedulingAppt extends Component {
                   var string_json = JSON.stringify(res);
                   var email_json = JSON.parse(string_json);
                   let email_in_use = email_json.email;
-                  console.log(email_in_use);
-                  // console.log(JSON.stringify(res));
-                  // console.log(res.data);
                   fetch("http://localhost:3001/checkIfApptExists?email=" + email_in_use + "&startTime=" + theTime + "&date=" + theDate)
                     .then(res => res.json())
                     .then(res => {
@@ -273,7 +296,8 @@ export class SchedulingAppt extends Component {
                             let gen_uid = uid_json.id;
                             console.log(gen_uid);
                             fetch("http://localhost:3001/schedule?time=" + theTime + "&endTime=" + endTime +
-                              "&date=" + theDate + "&concerns=" + theConcerns + "&symptoms=" + theSymptoms + "&id=" + gen_uid);
+                              "&date=" + theDate + "&concerns=" + theConcerns + "&symptoms=" + theSymptoms + 
+                              "&id=" + gen_uid + "&doc=" + theDoc);
                             fetch("http://localhost:3001/addToPatientSeeAppt?email=" + email_in_use + "&id=" + gen_uid +
                               "&concerns=" + theConcerns + "&symptoms=" + theSymptoms);
                             window.alert("Appointment successfully scheduled!");
@@ -283,17 +307,22 @@ export class SchedulingAppt extends Component {
                 });
             }}
           >
+            <Box align="center" gap="small">
+              <DoctorsDropdown />
+            </Box>
             <DateTimeDropButton>
             </DateTimeDropButton>
-            <ConcernsTextArea>
-            </ConcernsTextArea>
-            <SymptomsTextArea>
-            </SymptomsTextArea>
-            <Button
-              label="Attempt To Schedule"
-              type="submit"
-              primary
-            />
+            <ConcernsTextArea />
+            <br />
+            <SymptomsTextArea />
+            <br />
+            <Box align="center" pad="small" gap="small">
+              <Button
+                label="Attempt To Schedule"
+                type="submit"
+                primary
+              />
+            </Box>
           </Form>
         </Box>
       </Grommet>

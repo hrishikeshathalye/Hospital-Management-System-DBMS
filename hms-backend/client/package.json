@@ -4,13 +4,13 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.5.0",
-    "grommet": "^2.7.9",
+    "grommet": "^2.15.2",
     "grommet-icons": "^4.3.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.1.2",
+    "react-scripts": "^3.4.4",
     "styled-components": "^4.4.0"
   },
   "scripts": {

@@ -13,7 +13,7 @@ import './App.css';
 const theme = {
     global: {
         colors: {
-            brand: '#00739D',
+            brand: '#000000',
         },
         font: {
             family: 'Lato',
@@ -70,26 +70,10 @@ const SidebarButtons = () => {
 };
 
 export class DocHome extends Component {
-
-
-    state = { medhiststate: [] }
-
     componentDidMount() {
-        this.getNames("");
-        console.log(this.state.names);
-    }
-
-    getNames(value) {
-        let patName = value;
-        console.log(patName);
-        fetch('http://localhost:3001/MedHistView?name=' + patName + '&variable=words')
-            .then(res => res.json())
-            .then(res => this.setState({ medhiststate: res.data }));
     }
 
     render() {
-        const { medhiststate } = this.state;
-
         const Header = () => (
             <Box
                 tag='header'
@@ -101,36 +85,9 @@ export class DocHome extends Component {
                 align='center'
                 flex={false}
             >
-                <Heading level={3} margin='none'>
-                    <strong>HMS</strong>
-                </Heading>
+                <a style={{ color: 'inherit', textDecoration: 'inherit'}} href="/"><Heading level='3' margin='none'>HMS</Heading></a>
 
             </Box>
-        );
-
-        const Body = () => (
-            <div className="container">
-                <div className="panel panel-default p50 uth-panel">
-                    <table className="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>name</th>
-                                <th>email</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {medhiststate.map(patient =>
-                                <tr key={patient.id}>
-                                    <td>{patient.Name} </td>
-                                    <td>{patient.UID}
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
         );
 
         return (
@@ -147,12 +104,12 @@ export class DocHome extends Component {
                             { name: 'main', start: [1, 1], end: [1, 1] },
                         ]}>
                         <Box
-                            gridArea="sidebar"
-                            width="small"
-                            animation={[
-                                { type: 'fadeIn', duration: 300 },
-                                { type: 'slideRight', size: 'xlarge', duration: 150 },
-                            ]}
+                        gridArea="sidebar"
+                        width="small"
+                        animation={[
+                        { type: 'fadeIn', duration: 300 },
+                        { type: 'slideRight', size: 'xlarge', duration: 150 },
+                        ]}
                         >
                             <SidebarButtons />
                         </Box>
@@ -162,7 +119,7 @@ export class DocHome extends Component {
                             align="center">
                             <Box align="center" pad="large">
                                 <Heading
-                                    color="#00739D">Welcome Doctor
+                                    color="#000000">Welcome Doctor
                                 </Heading>
                             </Box>
                         </Box>

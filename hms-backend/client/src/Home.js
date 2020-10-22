@@ -13,7 +13,7 @@ import './App.css';
 const theme = {
   global: {
     colors: {
-      brand: '#00739D',
+      brand: '#000000',
     },
     font: {
       family: 'Lato',
@@ -99,8 +99,6 @@ export class Home extends Component {
   renderName = ({ name, email }) => <div key={email}>{name} {name}</div>
 
   render() {
-    const { names } = this.state;
-
     const Header = () => (
       <Box
         tag='header'
@@ -112,37 +110,8 @@ export class Home extends Component {
         align='center'
         flex={false}
       >
-        <Heading level={3} margin='none'>
-          <strong>HMS</strong>
-        </Heading>
-
+        <a style={{ color: 'inherit', textDecoration: 'inherit'}} href="/"><Heading level='3' margin='none'>HMS</Heading></a>
       </Box>
-    );
-
-    const Body = () => (
-      <div className="container">
-        <div className="panel panel-default p50 uth-panel">
-          <table className="table table-hover">
-            <thead>
-              <tr>
-                <th>name</th>
-                <th>email</th>
-                <th>address</th>
-              </tr>
-            </thead>
-            <tbody>
-              {names.map(patient =>
-                <tr key={patient.id}>
-                  <td>{patient.name} </td>
-                  <td>{patient.email}</td>
-                  <td>{patient.address}</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
     );
 
     return (
@@ -172,10 +141,9 @@ export class Home extends Component {
               gridArea="main"
               justify="top"
               align="center">
-
               <Box align="center" pad="large">
                 <Heading 
-                  color="#00739D">Welcome Patient
+                  color="#000000">Welcome Patient
                 </Heading>
               </Box>
             </Box>

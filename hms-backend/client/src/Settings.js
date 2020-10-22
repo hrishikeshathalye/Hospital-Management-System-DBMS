@@ -7,7 +7,6 @@ import {
     Grommet,
     FormField,
     Form,
-    Text,
 } from 'grommet';
 
 import './App.css';
@@ -15,7 +14,7 @@ import './App.css';
 const theme = {
     global: {
         colors: {
-            brand: '#00739D',
+            brand: '#000000',
         },
         font: {
             family: 'Lato',
@@ -34,13 +33,6 @@ const AppBar = (props) => (
         style={{ zIndex: '1' }}
         {...props} />
 );
-
-const INITIAL_STATE = {
-    email: "",
-    password: "",
-    error: null,
-};
-
 export class Settings extends Component {
     constuctor() {
     }
@@ -49,8 +41,9 @@ export class Settings extends Component {
             <Grommet theme={theme} full>
                 <Box >
                     <AppBar>
-                        <Heading level='3' margin='none'>HMS</Heading>
+                    <a style={{ color: 'inherit', textDecoration: 'inherit'}} href="/"><Heading level='3' margin='none'>HMS</Heading></a>
                     </AppBar>
+                    <Box pad="small">
                     <Form
                     onSubmit={({ value }) => {
                         let email_in_use = "";
@@ -77,24 +70,27 @@ export class Settings extends Component {
                           });
                           });
                     }}>
-                        <Text>Password Change</Text>
+                        <h3>Password Change</h3>
                         <FormField
                             type='password'
                             label="Old password"
                             name="oldPassword"
                             required
                         />
+                        <br />
                         <FormField
                             label="New password"
                             name="newPassword"
                             required
                         />
+                        <br />
                         <Button
                             type="submit"
-                            label="try to change"
+                            label="Change Password"
                             primary
                         />
                     </Form>
+                    </Box>
                 </Box>
             </Grommet>
         );

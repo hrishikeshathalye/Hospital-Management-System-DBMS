@@ -16,9 +16,9 @@ import './App.css';
 const theme = {
     global: {
         colors: {
-            brand: '#00739D',
-            focus: "#00739D",
-            active: "#00739D",
+            brand: '#000000',
+            focus: "#000000",
+            active: "#000000",
         },
         font: {
             family: 'Lato',
@@ -38,12 +38,6 @@ const AppBar = (props) => (
         {...props} />
 );
 
-const INITIAL_STATE = {
-    email: "",
-    password: "",
-    error: null,
-};
-
 export class MakeDoc extends Component {
     constuctor() {
     }
@@ -51,7 +45,7 @@ export class MakeDoc extends Component {
         return (
             <Grommet theme={theme} full>
                 <AppBar>
-                    <Heading level='3' margin='none'>HMS</Heading>
+                <a style={{ color: 'inherit', textDecoration: 'inherit'}} href="/"><Heading level='3' margin='none'>HMS</Heading></a>
                 </AppBar>
                 <Box fill align="center" justify="top">
                     <Box width="medium">

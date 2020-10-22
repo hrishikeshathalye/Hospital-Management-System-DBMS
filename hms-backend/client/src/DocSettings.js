@@ -6,8 +6,7 @@ import {
     Heading,
     Grommet,
     FormField,
-    Form,
-    Text,
+    Form
 } from 'grommet';
 
 import './App.css';
@@ -15,7 +14,7 @@ import './App.css';
 const theme = {
     global: {
         colors: {
-            brand: '#00739D',
+            brand: '#000000',
         },
         font: {
             family: 'Lato',
@@ -35,12 +34,6 @@ const AppBar = (props) => (
         {...props} />
 );
 
-const INITIAL_STATE = {
-    email: "",
-    password: "",
-    error: null,
-};
-
 export class DocSettings extends Component {
     constuctor() {
     }
@@ -49,9 +42,9 @@ export class DocSettings extends Component {
             <Grommet theme={theme} full>
                 <Box >
                     <AppBar>
-                        <Heading level='3' margin='none'>HMS</Heading>
+                    <a style={{ color: 'inherit', textDecoration: 'inherit'}} href="/"><Heading level='3' margin='none'>HMS</Heading></a>
                     </AppBar>
-
+                    <Box pad="small">
                     <Form
                     onSubmit={({ value }) => {
                         let email_in_use = "";
@@ -78,26 +71,27 @@ export class DocSettings extends Component {
                           });
 
                     }}>
-                        <Text>Password Change</Text>
+                        <h3>Password Change</h3>
                         <FormField
                             type='password'
-                            label="Old password"
+                            label="Old Password"
                             name="oldPassword"
                             required
                         />
+                        <br />
                         <FormField
-                            label="New password"
+                            label="New Password"
                             name="newPassword"
                             required
                         />
+                        <br />
                         <Button
                             type="submit"
-                            label="try to change"
+                            label="Change Password"
                             primary
                         />
                     </Form>
-
-
+                    </Box>
                 </Box>
             </Grommet>
         );

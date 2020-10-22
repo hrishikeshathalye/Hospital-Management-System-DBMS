@@ -10,7 +10,7 @@ import './App.css';
 const theme = {
     global: {
         colors: {
-            brand: '#00739D',
+            brand: '#000000',
         },
         font: {
             family: 'Lato',
@@ -19,11 +19,9 @@ const theme = {
 };
 
 export class NoMedHistFound extends Component {
-    state = { medhiststate: [] }
     componentDidMount() {
     }
     render() {
-        const { medhiststate } = this.state;
         const Header = () => (
             <Box
                 tag='header'
@@ -35,9 +33,7 @@ export class NoMedHistFound extends Component {
                 align='center'
                 flex={false}
             >
-                <Heading level={3} margin='none'>
-                    <strong>HMS</strong>
-                </Heading>
+                <a style={{ color: 'inherit', textDecoration: 'inherit'}} href="/"><Heading level='3' margin='none'>HMS</Heading></a>
 
             </Box>
         );
