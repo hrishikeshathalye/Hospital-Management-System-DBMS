@@ -82,21 +82,6 @@ const SidebarButtons = () => {
   );
 };
 export class Home extends Component {
-  
-  state = { names: [] }
-
-  componentDidMount() {
-
-    this.getNames();
-    console.log(this.state.names);
-  }
-
-  getNames = _ => {
-    fetch('http://localhost:3001/names')
-      .then(res => res.json())
-      .then(res => this.setState({ names: res.data }));
-  }
-
   renderName = ({ name, email }) => <div key={email}>{name} {name}</div>
 
   render() {

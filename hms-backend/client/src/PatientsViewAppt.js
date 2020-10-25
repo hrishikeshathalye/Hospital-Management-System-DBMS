@@ -13,6 +13,7 @@ const theme = {
     global: {
         colors: {
             brand: '#000000',
+            focus: '#000000'
         },
         font: {
             family: 'Lato',
@@ -73,36 +74,31 @@ export class PatientsViewAppointments extends Component {
                             {appointmentsState.map(patient =>
                                 <tr key={patient.user}>
                                     <td align="center" >
-                                        {patient.theDate.substring(0, 10)}
+                                        {new Date(patient.theDate).toLocaleDateString().substring(0, 10)}
                                     </td>
                                     <td align="center" >{patient.theStart.substring(0, 5)}</td>
                                     <td align="center" >{patient.theEnd.substring(0, 5)}</td>
                                     <td align="center">{patient.theConcerns} </td>
                                     <td align="center">{patient.theSymptoms}</td>
+                                    <td align="center">{patient.status}</td>
                                     <td>
                                         <Button label="See Diagnosis"
                                         href={`/showDiagnoses/${patient.ID}`}
                                         ></Button>     
                                     </td> 
                                     <td>
-                                    {   patient.staus==="NotDone"?
+                                    {   patient.status==="NotDone"?
                                         <Button label="Cancel"
                                         onClick = {() => {
                                             fetch('http://localhost:3001/deleteAppt?uid='+ patient.ID)
-                                            .then(res => {
-                                                res.json()
-                                                window.location.reload()
-                                            })
+                                            window.location.reload()
                                         }}
                                         ></Button>
                                         :
                                         <Button label="Delete"
                                         onClick = {() => {
                                             fetch('http://localhost:3001/deleteAppt?uid='+ patient.ID)
-                                            .then(res => {
-                                                res.json()
-                                                window.location.reload()
-                                            })
+                                            window.location.reload()
                                         }}
                                         ></Button>
                                     }

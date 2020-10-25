@@ -348,19 +348,6 @@ app.get('/getDateTimeOfAppt', (req, res) => {
 
 //Patient Info Related
 
-//to get all patient names
-app.get('/names', (req, res) => {
-  let statement = 'SELECT * FROM Patient';
-  console.log(statement)
-  con.query(statement, function (error, results, fields) {
-    if (error) throw error;
-    else {
-      return res.json({
-        data: results
-      })
-    };
-  });
-});
 //to get all doctor names
 app.get('/docInfo', (req, res) => {
   let statement = 'SELECT * FROM Doctor';
@@ -618,6 +605,7 @@ app.get('/deleteAppt', (req, res) => {
     else {
       if(results.status == "NotDone"){
         statement = `DELETE FROM Appointment WHERE id=${uid};`;
+        console.log(statement);
         con.query(statement, function (error, results, fields) {
           if (error) throw error;
         });
@@ -633,6 +621,7 @@ app.get('/deleteAppt', (req, res) => {
       }
     };
   });
+  return;
 });
 
 // If 404, forward to error handler

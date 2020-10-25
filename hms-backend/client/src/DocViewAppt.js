@@ -12,6 +12,7 @@ const theme = {
     global: {
       colors: {
         brand: '#000000',
+        focus: '#000000'
       },
       font: {
         family: 'Lato',
@@ -69,7 +70,7 @@ export class DocViewAppt extends Component {
                                 <tr key={appt.name}>
                                     <td>{appt.id}</td>
                                     <td>{appt.name}</td>
-                                    <td>{appt.date.substring(0,10)} </td>
+                                    <td>{new Date(appt.date).toLocaleDateString().substring(0,10)} </td>
                                     <td>{appt.starttime}</td>
                                     <td>{appt.concerns}</td>
                                     <td>{appt.symptoms}</td>
@@ -84,9 +85,7 @@ export class DocViewAppt extends Component {
                                             <Button label="Cancel"
                                             onClick = {() => {
                                                 fetch('http://localhost:3001/deleteAppt?uid='+ appt.id)
-                                                .then(res => res.json()).then(()=>{
-                                                    window.location.reload();
-                                                })
+                                                window.location.reload();
                                             }}
                                             ></Button>
                                         :<div></div>}

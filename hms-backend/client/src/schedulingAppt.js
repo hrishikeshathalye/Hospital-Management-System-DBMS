@@ -194,7 +194,6 @@ const ConcernsTextArea = () => {
       <Box
         width="medium"
         height="xsmall"
-        border={{ color: "brand", size: "small" }}
       >
       <TextArea
         placeholder="Enter your concerns..."
@@ -220,7 +219,6 @@ const SymptomsTextArea = () => {
       <Box
         width="medium"
         height="xsmall"
-        border={{ color: "brand", size: "small" }}
       >
         <TextArea
           placeholder="Enter your symptoms..."
