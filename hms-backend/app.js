@@ -129,15 +129,22 @@ app.get('/makeDocAccount', (req, res) => {
   let email = params.email;
   let password = params.password;
   let gender = params.gender;
+  let schedule = params.schedule;
   let sql_statement = `INSERT INTO Doctor (email, gender, password, name) 
                        VALUES ` + `("${email}", "${gender}", "${password}", "${name}")`;
   console.log(sql_statement);
   con.query(sql_statement, function (error, results, fields) {
     if (error) throw error;
     else {
+      let sql_statement = `INSERT INTO DocsHaveSchedules (sched, doctor) 
+                       VALUES ` + `(${schedule}, "${email}")`;
+      console.log(sql_statement);
+      con.query(sql_statement, function(error){
+        if (error) throw error;
+      })
       email_in_use = email;
       password_in_use = password;
-      who = doc;
+      who = 'doc';
       return res.json({
         data: results
       })
@@ -255,19 +262,21 @@ app.get('/endSession', (req, res) => {
   email_in_use = "";
   password_in_use = "";
 });
+
 //Appointment Related
 
 app.get('/checkIfApptExists', (req, res) => {
+  let cond1, cond2, cond3 = ""
   let params = req.query;
   let email = params.email;
+  let doc_email = params.docEmail;
   let startTime = params.startTime;
   let date = params.date;
-  let ndate = date.substring(0, 10);
-  let sql_date = `STR_TO_DATE('${ndate}', '%Y-%m-%d')`;
+  let ndate = new Date(date).toLocaleDateString().substring(0, 10)
+  let sql_date = `STR_TO_DATE('${ndate}', '%d/%m/%Y')`;
   //sql to turn string to sql time obj
   let sql_start = `CONVERT('${startTime}', TIME)`;
-  let statement = `SELECT * 
-  FROM PatientsAttendAppointments, Appointment  
+  let statement = `SELECT * FROM PatientsAttendAppointments, Appointment  
   WHERE patient = "${email}" AND
   appt = id AND
   date = ${sql_date} AND
@@ -277,11 +286,44 @@ app.get('/checkIfApptExists', (req, res) => {
     if (error) throw error;
     else {
       console.log(results);
-      return res.json({
-        data: results
-      })
+      cond1 = results;
+      statement=`SELECT * FROM Diagnose d INNER JOIN Appointment a 
+      ON d.appt=a.id WHERE doctor="${doc_email}" AND date=${sql_date} AND status="NotDone" 
+      AND ${sql_start} between starttime and endtime`
+      console.log(statement)
+      con.query(statement, function (error, results, fields) {
+        if (error) throw error;
+        else {
+          console.log(results);
+          cond2 = results;
+          statement = `SELECT doctor, starttime, endtime, breaktime, day FROM DocsHaveSchedules 
+          INNER JOIN Schedule ON DocsHaveSchedules.sched=Schedule.id
+          WHERE doctor="${doc_email}" AND 
+          day=DAYNAME(${sql_date}) AND 
+          ${sql_start} between starttime AND endtime AND 
+          ${sql_start} not between breaktime AND DATE_ADD(breaktime,INTERVAL +1 HOUR);`
+          //not in doctor schedule
+          console.log(statement)
+          con.query(statement, function (error, results, fields) {
+            if (error) throw error;
+            else {
+              console.log(results);
+              if(results.length){
+                results = []
+              }
+              else{
+                results = [1]
+              }
+              return res.json({
+                data: cond1.concat(cond2,results)
+              })
+            };
+          });
+        };
+      });
     };
   });
+  //doctor has appointment at the same time - Your start time has to be greater than all prev end times
 });
 
 app.get('/getDateTimeOfAppt', (req, res) => {
@@ -305,7 +347,8 @@ app.get('/getDateTimeOfAppt', (req, res) => {
 });
 
 //Patient Info Related
- //to get all patient names
+
+//to get all patient names
 app.get('/names', (req, res) => {
   let statement = 'SELECT * FROM Patient';
   console.log(statement)
@@ -382,7 +425,8 @@ app.get('/patientViewAppt', (req, res) => {
                           PatientsAttendAppointments.symptoms as theSymptoms, 
                           Appointment.date as theDate,
                           Appointment.starttime as theStart,
-                          Appointment.endtime as theEnd
+                          Appointment.endtime as theEnd,
+                          Appointment.status as status
                           FROM PatientsAttendAppointments, Appointment
                           WHERE PatientsAttendAppointments.patient = "${email}" AND
                           PatientsAttendAppointments.appt = Appointment.id`;
@@ -427,6 +471,11 @@ app.get('/addToPatientSeeAppt', (req, res) => {
   console.log(sql_try);
   con.query(sql_try, function (error, results, fields) {
     if (error) throw error;
+    else{
+      return res.json({
+        data: results
+      })
+    }
   });
 
 });
@@ -440,14 +489,14 @@ app.get('/schedule', (req, res) => {
   let concerns = params.concerns;
   let symptoms = params.symptoms;
   let doctor = params.doc;
-  let ndate = date.substring(0, 10);
-  let sql_date = `STR_TO_DATE('${ndate}', '%Y-%m-%d')`;
+  let ndate = new Date(date).toLocaleDateString().substring(0, 10)
+  let sql_date = `STR_TO_DATE('${ndate}', '%d/%m/%Y')`;
   //sql to turn string to sql time obj
   let sql_start = `CONVERT('${time}', TIME)`;
   //sql to turn string to sql time obj
   let sql_end = `CONVERT('${endtime}', TIME)`;
   let sql_try = `INSERT INTO Appointment (id, date, starttime, endtime, status) 
-                 VALUES (${id}, ${sql_date}, ${sql_start}, ${sql_end}, "Not Done")`;
+                 VALUES (${id}, ${sql_date}, ${sql_start}, ${sql_end}, "NotDone")`;
   console.log(sql_try);
   con.query(sql_try, function (error, results, fields) {
     if (error) throw error;
@@ -457,6 +506,11 @@ app.get('/schedule', (req, res) => {
       console.log(sql_try);
       con.query(sql_try, function (error, results, fields) {
         if (error) throw error;
+        else{
+          return res.json({
+            data: results
+          })
+        }
       });
     }
   });
@@ -481,8 +535,13 @@ app.get('/diagnose', (req, res) => {
   console.log(statement)
   con.query(statement, function (error, results, fields) {
     if (error) throw error;
-    // else {
-    // };
+    else {
+      let statement = `UPDATE Appointment SET status="Done" WHERE id=${id};`;
+      console.log(statement)
+      con.query(statement, function (error, results, fields){
+        if (error) throw error;
+      })
+    };
   });
 });
 
@@ -549,32 +608,29 @@ app.get('/allDiagnoses', (req, res) => {
   });
 });
 
-
 app.get('/deleteAppt', (req, res) => {
   let a = req.query;
   let uid = a.uid;
-  let statement = `DELETE FROM PatientsAttendAppointments p WHERE p.appt = ${uid}`;
+  let statement = `SELECT status FROM Appointment WHERE id=${uid};`;
   console.log(statement);
   con.query(statement, function (error, results, fields) {
     if (error) throw error;
     else {
-      let statement2 = `DELETE FROM ApptInRoom a WHERE a.appt = ${uid}`;
-      console.log(statement2);
-      con.query(statement, function (error, results, fields) {
-      if (error) throw error;
-          else {
-            let statement3 = `DELETE FROM ApptsToSchedules a WHERE a.appt = ${uid}`;
-            console.log(statement3);
-            con.query(statement, function (error, results, fields) {
-              if (error) throw error;
-              else {
-                return res.json({
-                  data: results
-                })
-              };
-            });
-          }
-     });  
+      if(results.status == "NotDone"){
+        statement = `DELETE FROM Appointment WHERE id=${uid};`;
+        con.query(statement, function (error, results, fields) {
+          if (error) throw error;
+        });
+      }
+      else{
+        if(who=="pat"){
+          statement = `DELETE FROM PatientsAttendAppointments p WHERE p.appt = ${uid}`;
+          console.log(statement);
+          con.query(statement, function (error, results, fields) {
+            if (error) throw error;
+          });
+        }
+      }
     };
   });
 });

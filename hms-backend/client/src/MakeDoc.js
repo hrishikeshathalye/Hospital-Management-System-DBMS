@@ -65,7 +65,7 @@ export class MakeDoc extends Component {
                                             console.log("no user found");
                                         } else {
                                             fetch("http://localhost:3001/makeDocAccount?name=" + value.firstName + "&lastname=" + value.lastName + "&email=" + value.email
-                                                + "&password=" + value.password + "&gender=" + value.gender);
+                                                + "&password=" + value.password + "&gender=" + value.gender + "&schedule=" + value.schedule);
                                             window.location = "/DocHome";
                                         }
                                     });
@@ -87,6 +87,11 @@ export class MakeDoc extends Component {
                                 name="email"
                                 type="email"
                                 placeholder="Please enter your email."
+                                required />
+                            <FormField
+                                label="Schedule No"
+                                name="schedule"
+                                placeholder="Please enter schedule number"
                                 required />
                             <FormField
                                 label="Gender"

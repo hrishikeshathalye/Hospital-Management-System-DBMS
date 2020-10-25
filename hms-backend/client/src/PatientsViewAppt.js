@@ -66,6 +66,7 @@ export class PatientsViewAppointments extends Component {
                                 <th>End Time</th>
                                 <th>Concerns</th>
                                 <th>Symptoms</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -84,12 +85,27 @@ export class PatientsViewAppointments extends Component {
                                         ></Button>     
                                     </td> 
                                     <td>
+                                    {   patient.staus==="NotDone"?
+                                        <Button label="Cancel"
+                                        onClick = {() => {
+                                            fetch('http://localhost:3001/deleteAppt?uid='+ patient.ID)
+                                            .then(res => {
+                                                res.json()
+                                                window.location.reload()
+                                            })
+                                        }}
+                                        ></Button>
+                                        :
                                         <Button label="Delete"
                                         onClick = {() => {
                                             fetch('http://localhost:3001/deleteAppt?uid='+ patient.ID)
-                                            .then(res => res.json())
+                                            .then(res => {
+                                                res.json()
+                                                window.location.reload()
+                                            })
                                         }}
-                                        ></Button>     
+                                        ></Button>
+                                    }
                                     </td>
                                 </tr>
                             )}

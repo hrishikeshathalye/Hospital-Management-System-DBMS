@@ -80,14 +80,16 @@ export class DocViewAppt extends Component {
                                         ></Button>     
                                     </td> 
                                     <td>
-                                        <Button label="Delete"
-                                        onClick = {() => {
-                                            fetch('http://localhost:3001/deleteAppt?uid='+ appt.id)
-                                            .then(res => res.json()).then(()=>{
-                                                window.location.reload();
-                                            })
-                                        }}
-                                        ></Button>     
+                                        {appt.status === "NotDone"?
+                                            <Button label="Cancel"
+                                            onClick = {() => {
+                                                fetch('http://localhost:3001/deleteAppt?uid='+ appt.id)
+                                                .then(res => res.json()).then(()=>{
+                                                    window.location.reload();
+                                                })
+                                            }}
+                                            ></Button>
+                                        :<div></div>}
                                     </td> 
                                 </tr>
                             )}

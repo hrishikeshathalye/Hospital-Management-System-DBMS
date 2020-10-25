@@ -14,6 +14,7 @@ const theme = {
   global: {
     colors: {
       brand: '#000000',
+      focus: '#000000'
     },
     font: {
       family: 'Lato',
@@ -109,6 +110,7 @@ export class Home extends Component {
         direction='row'
         align='center'
         flex={false}
+        style={{borderBottom:"1px solid grey"}}
       >
         <a style={{ color: 'inherit', textDecoration: 'inherit'}} href="/"><Heading level='3' margin='none'>HMS</Heading></a>
       </Box>
@@ -118,7 +120,7 @@ export class Home extends Component {
       <Grommet full={true}
         theme={theme} >
         <Box fill={true}>
-          <Header />
+          <Header/>
           <Grid
             fill
             rows={['auto', 'flex']}

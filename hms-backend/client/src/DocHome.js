@@ -14,6 +14,7 @@ const theme = {
     global: {
         colors: {
             brand: '#000000',
+            focus: '#000000'
         },
         font: {
             family: 'Lato',
@@ -63,6 +64,7 @@ const SidebarButtons = () => {
                             }}
                         />
                     ))}
+
                 </Box>
             </Box>
         </Grommet>
@@ -84,6 +86,7 @@ export class DocHome extends Component {
                 direction='row'
                 align='center'
                 flex={false}
+                style={{borderBottom:"1px solid grey"}}
             >
                 <a style={{ color: 'inherit', textDecoration: 'inherit'}} href="/"><Heading level='3' margin='none'>HMS</Heading></a>
 
@@ -94,7 +97,7 @@ export class DocHome extends Component {
             <Grommet full={true}
                 theme={theme}>
                 <Box align="left">
-                    <Header />
+                    <Header/>
                     <Grid
                         fill
                         rows={['auto', 'flex']}
