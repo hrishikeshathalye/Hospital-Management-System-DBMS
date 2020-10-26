@@ -293,13 +293,12 @@ app.get('/checkIfApptExists', (req, res) => {
       con.query(statement, function (error, results, fields) {
         if (error) throw error;
         else {
-          console.log(results);
           cond2 = results;
           statement = `SELECT doctor, starttime, endtime, breaktime, day FROM DocsHaveSchedules 
           INNER JOIN Schedule ON DocsHaveSchedules.sched=Schedule.id
           WHERE doctor="${doc_email}" AND 
           day=DAYNAME(${sql_date}) AND 
-          DATE_ADD(${sql_start},INTERVAL +1 HOUR) <= breaktime OR ${sql_start} >= DATE_ADD(breaktime,INTERVAL +1 HOUR);`
+          (DATE_ADD(${sql_start},INTERVAL +1 HOUR) <= breaktime OR ${sql_start} >= DATE_ADD(breaktime,INTERVAL +1 HOUR));`
           //not in doctor schedule
           console.log(statement)
           con.query(statement, function (error, results, fields) {

@@ -7,9 +7,9 @@ VALUES
 
 INSERT INTO MedicalHistory(id,date,conditions,surgeries,medication)
 VALUES
-(1,'19-01-14','Pain in abdomen,Asthma','Heart Surgery','Albuterol'),
+(1,'19-01-14','Pain in abdomen','Heart Surgery','Crocin'),
 (2,'19-01-14','Frequent Indigestion','none','none'),
-(3,'19-01-14','Frequent Indigestion','none','none')
+(3,'19-01-14','Body Pain','none','Iodex')
 ;
 
 INSERT INTO Doctor(email, gender, password, name)
@@ -20,9 +20,9 @@ VALUES
 
 INSERT INTO Appointment(id,date,starttime,endtime,status)
 VALUES
-(1, '19-01-14', '07:30', '09:00', 'Done'),
-(2, '19-05-30', '09:00', '12:00', 'Done'),
-(3, '19-06-30', '09:00', '12:00', 'Done')
+(1, '19-01-15', '09:00', '10:00', 'Done'),
+(2, '19-01-16', '10:00', '11:00', 'Done'),
+(3, '19-01-18', '14:00', '15:00', 'Done')
 ;
 
 INSERT INTO PatientsAttendAppointments(patient,appt,concerns,symptoms)
@@ -51,8 +51,8 @@ VALUES
 
 INSERT INTO Diagnose(appt,doctor,diagnosis,prescription)
 VALUES
-(1,'hathalye7@gmail.com', 'Major bloating due to allergy', 'Ibuprofen as needed'),
-(2,'hathalye8@gmail.com', 'Muscle tightness/soreness', 'Stretch morning/night'),
+(1,'hathalye7@gmail.com', 'Bloating', 'Ibuprofen as needed'),
+(2,'hathalye8@gmail.com', 'Muscle soreness', 'Stretch morning/night'),
 (3,'hathalye8@gmail.com', 'Vitamin Deficiency', 'Good Diet')
 ;
 
