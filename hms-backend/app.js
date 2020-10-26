@@ -1,7 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-var logger = require('morgan');
+// var logger = require('morgan');
 var mysql = require('mysql');
 var cors = require('cors');
 var port = 3001
@@ -28,7 +28,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -84,7 +84,9 @@ app.get('/makeAccount', (req, res) => {
       })
     };
   });
-  con.query('SELECT id FROM MedicalHistory ORDER BY id DESC LIMIT 1;', function (error, results, fields) {
+  sql_statement='SELECT id FROM MedicalHistory ORDER BY id DESC LIMIT 1;';
+  console.log(sql_statement)
+  con.query(sql_statement, function (error, results, fields) {
     if (error) throw error;
     else {
       let generated_id = results[0].id + 1;
@@ -115,7 +117,6 @@ app.get('/checkIfDocExists', (req, res) => {
   con.query(statement, function (error, results, fields) {
     if (error) throw error;
     else {
-      console.log(results);
       return res.json({
         data: results
       })
@@ -253,7 +254,6 @@ app.post('/resetPasswordDoctor', (req, res) => {
 });
 
 app.get('/userInSession', (req, res) => {
-  console.log(email_in_use)
   return res.json({ email: `${email_in_use}`, who:`${who}`});
 });
 
@@ -285,7 +285,6 @@ app.get('/checkIfApptExists', (req, res) => {
   con.query(statement, function (error, results, fields) {
     if (error) throw error;
     else {
-      console.log(results);
       cond1 = results;
       statement=`SELECT * FROM Diagnose d INNER JOIN Appointment a 
       ON d.appt=a.id WHERE doctor="${doc_email}" AND date=${sql_date} AND status="NotDone" 
@@ -307,7 +306,6 @@ app.get('/checkIfApptExists', (req, res) => {
           con.query(statement, function (error, results, fields) {
             if (error) throw error;
             else {
-              console.log(results);
               if(results.length){
                 results = []
               }
@@ -406,23 +404,21 @@ app.get('/MedHistView', (req, res) => {
 app.get('/patientViewAppt', (req, res) => {
   let tmp = req.query;
   let email = tmp.email;
-  let statement = `SELECT PatientsAttendAppointments.appt as ID, 
-                          PatientsAttendAppointments.patient as user, 
-                          PatientsAttendAppointments.concerns as theConcerns, 
-                          PatientsAttendAppointments.symptoms as theSymptoms, 
-                          Appointment.date as theDate,
-                          Appointment.starttime as theStart,
-                          Appointment.endtime as theEnd,
-                          Appointment.status as status
-                          FROM PatientsAttendAppointments, Appointment
-                          WHERE PatientsAttendAppointments.patient = "${email}" AND
-                          PatientsAttendAppointments.appt = Appointment.id`;
+  let statement = `SELECT PatientsAttendAppointments.appt as ID,
+                  PatientsAttendAppointments.patient as user, 
+                  PatientsAttendAppointments.concerns as theConcerns, 
+                  PatientsAttendAppointments.symptoms as theSymptoms, 
+                  Appointment.date as theDate,
+                  Appointment.starttime as theStart,
+                  Appointment.endtime as theEnd,
+                  Appointment.status as status
+                  FROM PatientsAttendAppointments, Appointment
+                  WHERE PatientsAttendAppointments.patient = "${email}" AND
+                  PatientsAttendAppointments.appt = Appointment.id`;
   console.log(statement);
   con.query(statement, function (error, results, fields) {
     if (error) throw error;
     else {
-      console.log(results);
-      console.log(JSON.stringify(results));
       return res.json({
         data: results
       })
@@ -438,8 +434,6 @@ app.get('/checkIfHistory', (req, res) => {
     con.query(statement, function (error, results, fields) {
         if (error) throw error;
         else {
-            console.log(results);
-            console.log(JSON.stringify(results));
             return res.json({
                 data: results
             })
@@ -504,7 +498,8 @@ app.get('/schedule', (req, res) => {
 });
 
 app.get('/genApptUID', (req, res) => {
-  con.query('SELECT id FROM Appointment ORDER BY id DESC LIMIT 1;', function (error, results, fields) {
+  let statement = 'SELECT id FROM Appointment ORDER BY id DESC LIMIT 1;'
+  con.query(statement, function (error, results, fields) {
     if (error) throw error;
     else {
       let generated_id = results[0].id + 1;
@@ -581,9 +576,9 @@ app.get('/showDiagnoses', (req, res) => {
 app.get('/allDiagnoses', (req, res) => {
   let params = req.query;
   let email = params.patientEmail;
-  let statement =`SELECT date,doctor,concerns,symptoms,diagnosis,prescription FROM
-   Appointment A INNER JOIN (SELECT * from PatientsAttendAppointments NATURAL JOIN Diagnose
-   WHERE patient=${email}) AS B ON A.id = B.appt;`
+  let statement =`SELECT date,doctor,concerns,symptoms,diagnosis,prescription FROM 
+  Appointment A INNER JOIN (SELECT * from PatientsAttendAppointments NATURAL JOIN Diagnose 
+  WHERE patient=${email}) AS B ON A.id = B.appt;`
   console.log(statement);
   con.query(statement, function (error, results, fields) {
     if (error) throw error;
