@@ -598,7 +598,8 @@ app.get('/deleteAppt', (req, res) => {
   con.query(statement, function (error, results, fields) {
     if (error) throw error;
     else {
-      if(results.status == "NotDone"){
+      results = results[0].status
+      if(results == "NotDone"){
         statement = `DELETE FROM Appointment WHERE id=${uid};`;
         console.log(statement);
         con.query(statement, function (error, results, fields) {
