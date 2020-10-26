@@ -288,7 +288,7 @@ app.get('/checkIfApptExists', (req, res) => {
       cond1 = results;
       statement=`SELECT * FROM Diagnose d INNER JOIN Appointment a 
       ON d.appt=a.id WHERE doctor="${doc_email}" AND date=${sql_date} AND status="NotDone" 
-      AND ${sql_start} between starttime and endtime`
+      AND ${sql_start} >= starttime AND ${sql_start} < endtime`
       console.log(statement)
       con.query(statement, function (error, results, fields) {
         if (error) throw error;
@@ -299,8 +299,7 @@ app.get('/checkIfApptExists', (req, res) => {
           INNER JOIN Schedule ON DocsHaveSchedules.sched=Schedule.id
           WHERE doctor="${doc_email}" AND 
           day=DAYNAME(${sql_date}) AND 
-          ${sql_start} between starttime AND endtime AND 
-          ${sql_start} not between breaktime AND DATE_ADD(breaktime,INTERVAL +1 HOUR);`
+          DATE_ADD(${sql_start},INTERVAL +1 HOUR) <= breaktime OR ${sql_start} >= DATE_ADD(breaktime,INTERVAL +1 HOUR);`
           //not in doctor schedule
           console.log(statement)
           con.query(statement, function (error, results, fields) {
