@@ -45,8 +45,8 @@ Hospital Management System made for Sem 5 DBMS Course Project
 
 <b>Instructions to run:</b>
 
-    1. Run <b>"npm install"</b> in frontend and backend directories.
+    1. Run "npm install" in frontend and backend directories.
     
-    2. Run <b>"npm start"</b> first in the backend and then in the frontend directory.
+    2. Run "npm start" first in the backend and then in the frontend directory.
     
     3. Access localhost:3000 from the browser.
