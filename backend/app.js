@@ -1,11 +1,13 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+//Logger that was used for debugging, commented later
 // var logger = require('morgan');
 var mysql = require('mysql');
 var cors = require('cors');
 var port = 3001
 
+//Connection Info
 var con = mysql.createConnection({
   host: 'localhost',
   user: 'hathalye7',
@@ -14,11 +16,13 @@ var con = mysql.createConnection({
   multipleStatements: true
 });
 
+//Connecting To Database
 con.connect(function (err) {
   if (err) throw err;
   console.log("Connected to MySQL");
 });
 
+//Variables to keep state info about who is logged in
 var email_in_use = "";
 var password_in_use = "";
 var who = "";
@@ -36,6 +40,7 @@ app.use(cors());
 
 //Signup, Login, Password Reset Related Queries
 
+//Checks if patient exists in database
 app.get('/checkIfPatientExists', (req, res) => {
   let params = req.query;
   let email = params.email;
@@ -51,6 +56,7 @@ app.get('/checkIfPatientExists', (req, res) => {
   });
 });
 
+//Creates User Account
 app.get('/makeAccount', (req, res) => {
   let query = req.query;
   let name = query.name + " " + query.lastname;
@@ -109,6 +115,7 @@ app.get('/makeAccount', (req, res) => {
   });
 });
 
+//Checks If Doctor Exists
 app.get('/checkIfDocExists', (req, res) => {
   let params = req.query;
   let email = params.email;
@@ -124,6 +131,7 @@ app.get('/checkIfDocExists', (req, res) => {
   });
 });
 
+//Makes Doctor Account
 app.get('/makeDocAccount', (req, res) => {
   let params = req.query;
   let name = params.name + " " + params.lastname;
@@ -153,6 +161,7 @@ app.get('/makeDocAccount', (req, res) => {
   });
 });
 
+//Checks if patient is logged in
 app.get('/checklogin', (req, res) => {
   let params = req.query;
   let email = params.email;
@@ -182,6 +191,7 @@ app.get('/checklogin', (req, res) => {
   });
 });
 
+//Checks if doctor is logged in
 app.get('/checkDoclogin', (req, res) => {
   let params = req.query;
   let email = params.email;
@@ -213,6 +223,7 @@ app.get('/checkDoclogin', (req, res) => {
   });
 });
 
+//Resets Patient Password
 app.post('/resetPasswordPatient', (req, res) => {
   let something = req.query;
   let email = something.email;
@@ -233,6 +244,7 @@ app.post('/resetPasswordPatient', (req, res) => {
   });
 });
 
+//Resets Doctor Password
 app.post('/resetPasswordDoctor', (req, res) => {
   let something = req.query;
   let email = something.email;
@@ -253,10 +265,12 @@ app.post('/resetPasswordDoctor', (req, res) => {
   });
 });
 
+//Returns Who is Logged in
 app.get('/userInSession', (req, res) => {
   return res.json({ email: `${email_in_use}`, who:`${who}`});
 });
 
+//Logs the person out
 app.get('/endSession', (req, res) => {
   console.log("Ending session");
   email_in_use = "";
@@ -265,6 +279,7 @@ app.get('/endSession', (req, res) => {
 
 //Appointment Related
 
+//Checks If a similar appointment exists to avoid a clash
 app.get('/checkIfApptExists', (req, res) => {
   let cond1, cond2, cond3 = ""
   let params = req.query;
@@ -322,6 +337,7 @@ app.get('/checkIfApptExists', (req, res) => {
   //doctor has appointment at the same time - Your start time has to be greater than all prev end times
 });
 
+//Returns Date/Time of Appointment
 app.get('/getDateTimeOfAppt', (req, res) => {
   let tmp = req.query;
   let id = tmp.id;
@@ -358,6 +374,7 @@ app.get('/docInfo', (req, res) => {
   });
 });
 
+//To return a particular patient history
 app.get('/OneHistory', (req, res) => {
   let params = req.query;
   let email = params.patientEmail;
@@ -376,6 +393,7 @@ app.get('/OneHistory', (req, res) => {
   })
 });
 
+//To show all patients whose medical history can be accessed
 app.get('/MedHistView', (req, res) => {
   let params = req.query;
   let patientName = "'%" + params.name + "%'";
@@ -399,6 +417,7 @@ app.get('/MedHistView', (req, res) => {
   });
 });
 
+//Returns Appointment Info To patient logged In
 app.get('/patientViewAppt', (req, res) => {
   let tmp = req.query;
   let email = tmp.email;
@@ -424,6 +443,7 @@ app.get('/patientViewAppt', (req, res) => {
   });
 });
 
+//Checks if history exists
 app.get('/checkIfHistory', (req, res) => {
     let params = req.query;
     let email = params.email;
@@ -439,6 +459,7 @@ app.get('/checkIfHistory', (req, res) => {
     });
 });
 
+//Adds to PatientsAttendAppointment Table
 app.get('/addToPatientSeeAppt', (req, res) => {
   let params = req.query;
   let email = params.email;
@@ -459,6 +480,7 @@ app.get('/addToPatientSeeAppt', (req, res) => {
 
 });
 
+//Schedules Appointment
 app.get('/schedule', (req, res) => {
   let params = req.query;
   let time = params.time;
@@ -495,6 +517,7 @@ app.get('/schedule', (req, res) => {
   });
 });
 
+//Generates ID for appointment
 app.get('/genApptUID', (req, res) => {
   let statement = 'SELECT id FROM Appointment ORDER BY id DESC LIMIT 1;'
   con.query(statement, function (error, results, fields) {
@@ -506,6 +529,7 @@ app.get('/genApptUID', (req, res) => {
   });
 });
 
+//To fill diagnoses
 app.get('/diagnose', (req, res) => {
   let params = req.query;
   let id = params.id;
@@ -525,6 +549,7 @@ app.get('/diagnose', (req, res) => {
   });
 });
 
+//To show diagnoses
 app.get('/showDiagnoses', (req, res) => {
   let id = req.query.id;
   let statement = `SELECT * FROM Diagnose WHERE appt=${id}`;
@@ -539,6 +564,7 @@ app.get('/showDiagnoses', (req, res) => {
   });
 });
 
+//To show appointments to doctor
 app.get('/doctorViewAppt', (req, res) => {
   let a = req.query;
   let email = a.email;
@@ -557,6 +583,7 @@ app.get('/doctorViewAppt', (req, res) => {
   });
 });
 
+//To show diagnoses to patient
 app.get('/showDiagnoses', (req, res) => {
   let id = req.query.id;
   let statement = `SELECT * FROM Diagnose WHERE appt=${id}`;
@@ -571,6 +598,7 @@ app.get('/showDiagnoses', (req, res) => {
   });
 });
 
+//To Show all diagnosed appointments till now
 app.get('/allDiagnoses', (req, res) => {
   let params = req.query;
   let email = params.patientEmail;
@@ -588,6 +616,7 @@ app.get('/allDiagnoses', (req, res) => {
   });
 });
 
+//To delete appointment
 app.get('/deleteAppt', (req, res) => {
   let a = req.query;
   let uid = a.uid;
