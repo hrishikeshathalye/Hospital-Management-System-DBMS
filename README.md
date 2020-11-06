@@ -5,7 +5,7 @@ MIS: 111803154
 Class : TY Comp Div 2
 </pre>
 
-Hospital Management System made for Sem 5 DBMS Course Project
+Hospital Management System made for Sem 5 DBMS Course Project.<br>
 Hospitals interact with a lot of people in a day and there are various activities involved in day to day operations of hospitals, for example booking of appointments, managing doctor schedules, managing patient diagnoses, managing medical histories of patients, etc. The aim of this project is to show how data related to these tasks can be made easier to manage using databases.
 
 <b>Technologies Used:</b>
