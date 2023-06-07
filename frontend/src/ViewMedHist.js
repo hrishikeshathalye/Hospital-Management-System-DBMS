@@ -66,8 +66,8 @@ export class ViewMedHist extends Component {
                     <table className="table table-hover">
                         <thead>
                             <tr>
-                                <th style={{width:"50vw"}}>Name</th>
-                                <th style={{width:"50vw"}}>Profile</th>
+                                <th style={{width:"50vw"}}>Имя</th>
+                                <th style={{width:"50vw"}}>Профиль</th>
                             </tr>
                         </thead> 
                         <tbody>
@@ -75,7 +75,7 @@ export class ViewMedHist extends Component {
                                 <tr key={patient.id} style={{textAlign:"center"}}>
                                     <td>{patient.Name} </td>
                                     <td>
-                                        <Button label="Medical Profile" href={'/ViewOneHistory/' + patient.email}/>
+                                        <Button label="Медицинский профиль" href={'/ViewOneHistory/' + patient.email}/>
                                     </td>
                                 </tr>
                             )}
@@ -93,10 +93,10 @@ export class ViewMedHist extends Component {
                         onSubmit={({ value }) => {
                             this.getNames(value.email);
                         }}>
-                        <h4 style={{textAlign:"center", marginBottom:"0"}}>Search By Name</h4>
+                        <h4 style={{textAlign:"center", marginBottom:"0"}}>Поиск по имени</h4>
                         <FormField name="email" align="center" />
                         <div align="center">
-                            <Button type="submit" primary label="Submit" />
+                            <Button type="submit" primary label="Принять" />
                         </div>
                     </Form>
                     <Body />

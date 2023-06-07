@@ -41,23 +41,23 @@ const SidebarButtons = () => {
     <Grommet full theme={theme}>
       <Box fill direction="row">
         <Box background="brand">
-          {["View Medical History", "View Appointments", "Schedule Appointment", "Settings", "Sign Out"].map(label => (
+          {["Просмотр истории болезни", "Просмотр назначенных встреч", "Записаться на прием", "Параметры", "Выйти"].map(label => (
             <SidebarButton
               key={label}
               label={label}
               active={label === active}
               onClick={() => {
-                if (label === "Schedule Appointment") {
+                if (label === "Записаться на прием") {
                   window.location = "/scheduleAppt"
                 }
-                else if (label === "Sign Out") {
+                else if (label === "Выйти") {
                   fetch("http://localhost:3001/endSession");
                   window.location = "/"
                 }
-                else if (label === "View Appointments") {
+                else if (label === "Просмотр назначенных встреч") {
                   window.location = "/PatientsViewAppt"
                 }
-                else if (label === "View Medical History") {
+                else if (label === "Просмотр истории болезни") {
                   let email_in_use = "";
                   fetch("http://localhost:3001/userInSession")
                     .then(res => res.json())
@@ -69,7 +69,7 @@ const SidebarButtons = () => {
                       window.location = "/ViewOneHistory/" + email_in_use;
                     });
                 }
-                else if (label === "Settings") {
+                else if (label === "Параметры") {
                   window.location = "/Settings"
                 }
                 setActive(label);
@@ -130,7 +130,7 @@ export class Home extends Component {
               align="center">
               <Box align="center" pad="large">
                 <Heading 
-                  color="#000000">Welcome Patient
+                  color="#000000">Добро пожаловать
                 </Heading>
               </Box>
             </Box>

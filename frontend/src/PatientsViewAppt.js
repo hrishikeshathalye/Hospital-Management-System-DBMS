@@ -62,12 +62,12 @@ export class PatientsViewAppointments extends Component {
                     <table className="table table-hover">
                         <thead>
                             <tr>
-                            <th>Date of Appointment</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>Concerns</th>
-                                <th>Symptoms</th>
-                                <th>Status</th>
+                            <th>Дата приёма</th>
+                                <th>Время начала</th>
+                                <th>Время окончания</th>
+                                <th>Беспокойства</th>
+                                <th>Симптомы</th>
+                                <th>Состояние</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -82,20 +82,20 @@ export class PatientsViewAppointments extends Component {
                                     <td align="center">{patient.theSymptoms}</td>
                                     <td align="center">{patient.status}</td>
                                     <td>
-                                        <Button label="See Diagnosis"
+                                        <Button label="Увидеть диагноз"
                                         href={`/showDiagnoses/${patient.ID}`}
                                         ></Button>     
                                     </td> 
                                     <td>
                                     {   patient.status==="NotDone"?
-                                        <Button label="Cancel"
+                                        <Button label="Отмена"
                                         onClick = {() => {
                                             fetch('http://localhost:3001/deleteAppt?uid='+ patient.ID)
                                             window.location.reload()
                                         }}
                                         ></Button>
                                         :
-                                        <Button label="Delete"
+                                        <Button label="Удалить"
                                         onClick = {() => {
                                             fetch('http://localhost:3001/deleteAppt?uid='+ patient.ID)
                                             window.location.reload()

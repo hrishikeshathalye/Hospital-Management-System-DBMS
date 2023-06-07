@@ -71,7 +71,7 @@ export class ViewOneHistory extends Component {
                             <TableBody>
                                 <TableRow>
                                     <TableCell scope="row">
-                                        <strong>Name</strong>
+                                        <strong>Имя</strong>
                                     </TableCell>
                                     <TableCell>{patient.name}</TableCell>
                                     <TableCell></TableCell>
@@ -80,14 +80,14 @@ export class ViewOneHistory extends Component {
                                 </TableRow>
                                 <TableRow>
                                     <TableCell scope="row">
-                                        <strong>Gender</strong>
+                                        <strong>Пол</strong>
                                     </TableCell>
                                     <TableCell>
                                         {patient.gender}
                                     </TableCell>
                                     <TableCell />
                                     <TableCell>
-                                        <strong>Address</strong>
+                                        <strong>Адрес</strong>
                                     </TableCell>
                                     <TableCell>{patient.address}</TableCell>
                                 </TableRow>
@@ -97,7 +97,7 @@ export class ViewOneHistory extends Component {
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>
-                                        <strong>Conditions</strong>
+                                        <strong>Состояния</strong>
                                     </TableCell>
                                     <TableCell>{patient.conditions}
                                         </TableCell>
@@ -108,7 +108,7 @@ export class ViewOneHistory extends Component {
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>
-                                        <strong>Surgeries</strong>
+                                        <strong>Операции</strong>
                                     </TableCell>
                                     <TableCell>{patient.surgeries}
                                     </TableCell>
@@ -119,7 +119,7 @@ export class ViewOneHistory extends Component {
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>
-                                        <strong>Medications</strong>
+                                        <strong>Лекарства</strong>
                                     </TableCell>
                                     <TableCell>{patient.medication}
                                     </TableCell>
@@ -140,23 +140,23 @@ export class ViewOneHistory extends Component {
                             <TableBody>
                                 <TableRow>
                                     <TableCell scope="row">
-                                        <strong>Date</strong>
+                                        <strong>Дата</strong>
                                     </TableCell>
                                     <TableCell>{patient.date.split('T')[0]}</TableCell>
                                     <TableCell></TableCell>
-                                    <TableCell><strong>Doctor</strong></TableCell>
+                                    <TableCell><strong>Специалист</strong></TableCell>
                                     <TableCell>{patient.doctor}</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell scope="row">
-                                        <strong>Concerns</strong>
+                                        <strong>Беспокойства</strong>
                                     </TableCell>
                                     <TableCell>
                                         {patient.concerns}
                                     </TableCell>
                                     <TableCell />
                                     <TableCell>
-                                        <strong>Symptoms</strong>
+                                        <strong>Симптомы</strong>
                                     </TableCell>
                                     <TableCell>{patient.symptoms}</TableCell>
                                 </TableRow>
@@ -166,7 +166,7 @@ export class ViewOneHistory extends Component {
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>
-                                        <strong>Diagnosis</strong>
+                                        <strong>Диагнозы</strong>
                                     </TableCell>
                                     <TableCell>{patient.diagnosis}
                                         </TableCell>
@@ -177,7 +177,7 @@ export class ViewOneHistory extends Component {
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>
-                                        <strong>Prescription</strong>
+                                        <strong>Рекомендации</strong>
                                     </TableCell>
                                     <TableCell>{patient.prescription}
                                     </TableCell>

@@ -64,30 +64,30 @@ export class Settings extends Component {
                           .then(res => {
                             let didUpdate = res.data.affectedRows;
                             if(didUpdate === 0) {
-                                window.alert("Entered your old password incorrectly");
+                                window.alert("Вы неправильно ввели свой старый пароль");
                             } else {
-                                window.alert("Password Reset Successful");
+                                window.alert("Сброс пароля прошел успешно");
                             }
                           });
                           });
                     }}>
-                        <h3>Password Change</h3>
+                        <h3>Смена пароля</h3>
                         <FormField
                             type='password'
-                            label="Old password"
+                            label="Старый пароль"
                             name="oldPassword"
                             required
                         />
                         <br />
                         <FormField
-                            label="New password"
+                            label="Новый пароль"
                             name="newPassword"
                             required
                         />
                         <br />
                         <Button
                             type="submit"
-                            label="Change Password"
+                            label="Сменить пароль"
                             primary
                         />
                     </Form>

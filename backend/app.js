@@ -5,14 +5,14 @@ var path = require('path');
 // var logger = require('morgan');
 var mysql = require('mysql');
 var cors = require('cors');
-var port = 3001
+var port = 3301
 
 //Connection Info
 var con = mysql.createConnection({
   host: 'localhost',
-  user: 'hathalye7',
-  password: 'hrishikesh',
-  database: 'HMS',
+  user: 'wolper',
+  password: 'Wolper_789',
+  database: 'hospdb',
   multipleStatements: true
 });
 
@@ -21,6 +21,8 @@ con.connect(function (err) {
   if (err) throw err;
   console.log("Connected to MySQL");
 });
+
+
 
 //Variables to keep state info about who is logged in
 var email_in_use = "";
