@@ -11,7 +11,7 @@ var port = 3001
 var con = mysql.createConnection({
   host: 'localhost',
   user: 'wolper',
-  password: 'Wolper_789',
+  password: '',
   database: 'hospdb',
   multipleStatements: true
 });
