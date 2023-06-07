@@ -137,7 +137,7 @@ const DropContent = ({ date: initialDate, time: initialTime, onClose }) => {
           />
         </Keyboard>
         <Box flex={false}>
-          <Button label="Done" onClick={close} color="#00739D" />
+          <Button label="Готово" onClick={close} color="#00739D" />
         </Box>
       </Box>
     </Box>
@@ -171,7 +171,7 @@ const DateTimeDropButton = () => {
             <Text color={date ? undefined : "dark-5"}>
               {date
                 ? `${new Date(date).toLocaleDateString()} ${time}`
-                : "Select date & time"}
+                : "Выбрать дату & время"}
             </Text>
             <Schedule />
           </Box>
@@ -196,7 +196,7 @@ const ConcernsTextArea = () => {
         height="xsmall"
       >
       <TextArea
-        placeholder="Enter your concerns..."
+        placeholder="Укажите ваши проблемы..."
         value={value}
         onChange={onChange}
         fill
@@ -221,7 +221,7 @@ const SymptomsTextArea = () => {
         height="xsmall"
       >
         <TextArea
-          placeholder="Enter your symptoms..."
+          placeholder="Укажите ваши симптомы..."
           value={value}
           onChange={onChange} fill
           required />
@@ -254,7 +254,7 @@ function DoctorsDropdown() {
     <Select
       options={doctorsList}
       value={value}
-      placeholder="Select Doctor"
+      placeholder="Выбрать специалиста"
       onChange={onChange} fill
       required
     />
@@ -284,7 +284,7 @@ export class SchedulingAppt extends Component {
                     .then(res => res.json())
                     .then(res => {
                       if ((res.data[0])) {
-                        window.alert("Appointment Clash! Try another doctor or date/time");
+                        window.alert("Обратитесь к другому врачу или назначьте дату/время");
                       } else {
                         fetch("http://localhost:3001/genApptUID")
                           .then(res => res.json())
@@ -298,7 +298,7 @@ export class SchedulingAppt extends Component {
                               "&id=" + gen_uid + "&doc=" + theDoc).then((x)=>{
                               fetch("http://localhost:3001/addToPatientSeeAppt?email=" + email_in_use + "&id=" + gen_uid +
                                 "&concerns=" + theConcerns + "&symptoms=" + theSymptoms).then((x)=>{
-                                  window.alert("Appointment successfully scheduled!");
+                                  window.alert("Встреча успешно назначена!");
                                 });
                             })
                           });
@@ -318,7 +318,7 @@ export class SchedulingAppt extends Component {
             <br />
             <Box align="center" pad="small" gap="small">
               <Button
-                label="Attempt To Schedule"
+                label="Записаться"
                 type="submit"
                 primary
               />

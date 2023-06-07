@@ -41,23 +41,23 @@ const SidebarButtons = () => {
         <Grommet full theme={theme}>
             <Box fill direction="row">
                 <Box background="brand">
-                    {["Appointments", "View Patients", "Settings", "Sign Out"].map(label => (
+                    {["Расписание", "Пациенты", "Параметры", "Выйти"].map(label => (
                         <SidebarButton
                             key={label}
                             label={label}
                             active={label === active}
                             onClick={() => {
-                                if (label === "Appointments") {
+                                if (label === "Расписание") {
                                     window.location = "/ApptList"
                                 }
-                                else if (label === "Sign Out") {
+                                else if (label === "Выйти") {
                                     fetch("http://localhost:3001/endSession");
                                     window.location = "/"
                                 }
-                                else if (label === "Settings") {
+                                else if (label === "Параметры") {
                                     window.location = "/DocSettings"
                                 }
-                                else if (label === "View Patients") {
+                                else if (label === "Пациенты") {
                                     window.location = "/MedHistView"
                                 }
                                 setActive(label);
@@ -122,7 +122,7 @@ export class DocHome extends Component {
                             align="center">
                             <Box align="center" pad="large">
                                 <Heading
-                                    color="#000000">Welcome Doctor
+                                    color="#000000">Добро пожаловать
                                 </Heading>
                             </Box>
                         </Box>

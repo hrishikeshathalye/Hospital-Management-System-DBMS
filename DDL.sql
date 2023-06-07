@@ -1,5 +1,5 @@
-CREATE DATABASE HMS;
-USE HMS;
+CREATE DATABASE polidb;
+USE polidb;
 
 CREATE TABLE Patient(
 email varchar(50) PRIMARY KEY,

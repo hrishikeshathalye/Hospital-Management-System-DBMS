@@ -47,8 +47,8 @@ const DiagnosisTextArea = () => {
     <Grommet theme={theme}>
       <h4>Diagnosis</h4>
       <TextArea
-        placeholder="Enter Diagnosis"
-        label="Enter Diagnosis"
+        placeholder="Введите диагноз"
+        label="Введите диагноз"
         value={value}
         onChange={onChange}
         style={{width:"50vw", height:"12vw"}}
@@ -66,10 +66,10 @@ const PrescriptionTextArea = () => {
   };
   return (
     <Grommet theme={theme}>
-        <h4>Prescription</h4>
+        <h4>Рекомендации</h4>
         <TextArea
-          placeholder="Enter Prescription"
-          label="Enter Prescription"
+          placeholder="Введите рекомендации"
+          label="Введите рекомендации"
           value={value}
           style={{width:"50vw", height:"12vw"}}
           onChange={onChange} fill
@@ -95,7 +95,7 @@ export class Diagnose extends Component {
               fetch("http://localhost:3001/diagnose?diagnosis=" + diagnosis + "&prescription=" + prescription
               + "&id=" + id).then(()=>{
               })
-              window.alert("Diagnosis Submitted!");
+              window.alert("Диагноз поставлен!");
             }}
           >
             <DiagnosisTextArea />
@@ -103,7 +103,7 @@ export class Diagnose extends Component {
             <br />
             <Box align="center">
             <Button
-              label="Submit Diagnosis"
+              label="Поставить диагноз"
               type="submit"
               primary
             />

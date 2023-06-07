@@ -47,7 +47,7 @@ export class CreateAccount extends Component {
         </AppBar>
         <Box fill align="center" justify="top">
           <Box width="medium">
-          <Text color = "#AAAAAA">Patient's registration form:</Text>
+          <Text color = "#AAAAAA">Регистрационная форма пациента:</Text>
             <Form
               onReset={event => console.log(event)}
               method="post"
@@ -71,72 +71,72 @@ export class CreateAccount extends Component {
                   });
               }}>
               <FormField
-                label="First Name"
+                label="Имя"
                 name="firstName"
-                placeholder="First name"
+                placeholder="Имя"
                 required
                 validate={{ regexp: /^[a-z]/i }} />
               <FormField
-                label="Last Name"
+                label="Фамилия"
                 name="lastName"
                 required
-                placeholder="Last Name"
+                placeholder="Фамилия"
                 validate={{ regexp: /^[a-z]/i }} />
               <FormField
-                label="Gender"
+                label="Пол"
                 name="gender"
-                placeholder="Female or Male"
+                placeholder="Пол"
                 required />
               <FormField
-                label="Medical History - Conditions"
+                label="История болезни - Состояния"
                 name="conditions"
-                placeholder="Conditions"
+                placeholder="Состояния"
                />
               <FormField
-                label="Medical History - Surgeries"
+                label="История болезни - Операции"
                 name="surgeries"
-                placeholder="Surgeries"
+                placeholder="Операции"
                />
               <FormField
-                label="Medical History - Medications"
+                label="История болезни - Лекарства"
                 name="medications"
-                placeholder="Medications"
+                placeholder="Лекарства"
                />
               <FormField
-                label="Address"
+                label="Адрес"
                 name="address"
-                placeholder="Address"
+                placeholder="Адрес"
                 required />
               <FormField
-                label="Email"
+                label="Электронная почта"
                 name="email"
                 type="email"
-                placeholder="Email"
+                placeholder="Электронная почта"
                 required />
               <FormField
-                label="Password"
+                label="Пароль"
                 name="password"
-                placeholder="Password"
+                placeholder="Пароль"
                 required
-                validate={{ regexp: /^(?=.{8,})(?=.*[0-9]{2})/, message: "@ least 8 characters containing 2 digits" }} />
+                validate={{ regexp: /^(?=.{8,})(?=.*[0-9]{1})/, message: "@ минимум 8 символов, содержащих буквы и числа" }} />
               <Box direction="row" align="center" >
                 <Button
                   style={{ textAlign: 'center' }}
-                  label="Cancel"
+                  label="Отмена"
                   fill="horizontal"
                   href="/" />
                 <Button
-                  label="Sign Up"
+                  label="Зарегистрироваться"
                   fill="horizontal"
                   type="submit"
                   primary />
               </Box>
               <Box
                 align="center" pad="small">
-                <Text>Are you a doctor?</Text>
+                <Text>Вы являетесь врачом?</Text>
                 <Button
                   primary
-                  label="I'm a doctor"
+                  label="Я являюсь врачом"
                   href="/MakeDoc" />
               </Box>
             </Form>

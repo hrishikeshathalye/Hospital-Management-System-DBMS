@@ -57,12 +57,12 @@ export class DocViewAppt extends Component {
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
-                                <th>Date</th>
-                                <th>Start Time</th>
-                                <th>Concerns</th>
-                                <th>Symptoms</th>
-                                <th>Status</th>
+                                <th>Имя</th>
+                                <th>Дата</th>
+                                <th>Время начала</th>
+                                <th>Беспокойства</th>
+                                <th>Симптомы</th>
+                                <th>Состояние</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -76,13 +76,13 @@ export class DocViewAppt extends Component {
                                     <td>{appt.symptoms}</td>
                                     <td>{appt.status}</td>
                                     <td>
-                                        <Button label="Diagnose"
+                                        <Button label="Диагностировать"
                                         href={`/Diagnose/${appt.id}`}
                                         ></Button>     
                                     </td> 
                                     <td>
                                         {appt.status === "NotDone"?
-                                            <Button label="Cancel"
+                                            <Button label="Отмена"
                                             onClick = {() => {
                                                 fetch('http://localhost:3001/deleteAppt?uid='+ appt.id)
                                                 window.location.reload();

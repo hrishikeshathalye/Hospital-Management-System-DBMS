@@ -41,7 +41,7 @@ export class NoMedHistFound extends Component {
         const Body = () => (
             <div className="container">
                 <div className="panel panel-default p50 uth-panel" >
-                    <Heading alignSelf="center" textAlign="right" margin="large">Medical History Not Found<br /></Heading>
+                    <Heading alignSelf="center" textAlign="right" margin="large">История болезни не найдена<br /></Heading>
                 </div>
             </div>
         );

@@ -103,20 +103,20 @@ class LogIn extends Component {
                 label="Email"
                 name="email"
                 type="email"
-                placeholder = "Please enter your email."
+                placeholder = "Пожалуйста, введите свой адрес электронной почты."
                 required />
               <FormField
                 color="#00739D"
                 type='password'
-                label="Password"
+                label="Пароль"
                 name="password"
-                placeholder = "Please enter your password."
+                placeholder = "Пожалуйста, введите свой пароль."
                 required />
               <FormField
                 component={CheckBox}
                 checked={isDoctor}
                 margin="large"
-                label="I'm a doctor"
+                label="Я врач"
                 name="isDoc"
                 onChange={(event) => {
                   this.setState({ isDoctor: event.target.checked })
@@ -124,8 +124,8 @@ class LogIn extends Component {
               />
               <Box direction="column" align="center" >
                 <Button style={{ textAlign: 'center' , margin:'1rem'}}
-                 type="submit" label="Log In" fill="horizontal" primary />
-                <Button label="Create Account"
+                 type="submit" label="Войти" fill="horizontal" primary />
+                <Button label="Создать аккаунт"
                   style={{ textAlign: 'center' , margin:'0.5rem'}}
                   fill="horizontal"
                   href="/createAcc" />

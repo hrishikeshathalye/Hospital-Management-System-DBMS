@@ -61,7 +61,7 @@ export class ShowDiagnoses extends Component {
                             <TableBody>
                                 <TableRow>
                                     <TableCell scope="row">
-                                        <strong>Appointment Id</strong>
+                                        <strong>Id приёма</strong>
                                     </TableCell>
                                     <TableCell>{diagnosis.appt}</TableCell>
                                     <TableCell></TableCell>
@@ -69,7 +69,7 @@ export class ShowDiagnoses extends Component {
                                 <br />
                                 <TableRow>
                                     <TableCell scope="row">
-                                        <strong>Doctor</strong>
+                                        <strong>Специалист</strong>
                                     </TableCell>
                                     <TableCell>{diagnosis.doctor}</TableCell>
                                     <TableCell></TableCell>
@@ -77,7 +77,7 @@ export class ShowDiagnoses extends Component {
                                 <br />
                                 <TableRow>
                                     <TableCell scope="row">
-                                        <strong>Diagnosis</strong>
+                                        <strong>Диагноз</strong>
                                     </TableCell>
                                     <TableCell>{diagnosis.diagnosis}</TableCell>
                                     <TableCell></TableCell>
@@ -85,7 +85,7 @@ export class ShowDiagnoses extends Component {
                                 <br />
                                 <TableRow>
                                     <TableCell scope="row">
-                                        <strong>Prescription</strong>
+                                        <strong>Рекомендации</strong>
                                     </TableCell>
                                     <TableCell>{diagnosis.prescription}</TableCell>
                                     <TableCell></TableCell>

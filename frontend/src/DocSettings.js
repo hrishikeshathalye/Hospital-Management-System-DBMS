@@ -64,31 +64,31 @@ export class DocSettings extends Component {
                           .then(res => {
                             let didUpdate = res.data.affectedRows;
                             if(didUpdate === 0) {
-                                window.alert("Old Password is wrong");
+                                window.alert("Старый пароль неверен");
                             } else {
-                                window.alert("Password Reset Successful");
+                                window.alert("Сброс пароля прошел успешно");
                             }
                           });
                           });
 
                     }}>
-                        <h3>Password Change</h3>
+                        <h3>Смена пароля</h3>
                         <FormField
                             type='password'
-                            label="Old Password"
+                            label="Старый пароль"
                             name="oldPassword"
                             required
                         />
                         <br />
                         <FormField
-                            label="New Password"
+                            label="Новый пароль"
                             name="newPassword"
                             required
                         />
                         <br />
                         <Button
                             type="submit"
-                            label="Change Password"
+                            label="Сменить пароль"
                             primary
                         />
                     </Form>

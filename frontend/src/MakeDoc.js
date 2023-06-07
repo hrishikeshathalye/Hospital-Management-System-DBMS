@@ -49,7 +49,7 @@ export class MakeDoc extends Component {
                 </AppBar>
                 <Box fill align="center" justify="top">
                     <Box width="medium">
-                    <Text color = "#AAAAAA">Doctor's registration form:</Text>
+                    <Text color = "#AAAAAA">Регистрационная форма для врачей:</Text>
                         <Form
                             onReset={event => console.log(event)}
                             method="post"
@@ -71,47 +71,47 @@ export class MakeDoc extends Component {
                                     });
                             }} >
                             <FormField
-                                label="First Name"
+                                label="Имя"
                                 name="firstName"
                                 required
-                                placeholder="Please enter your first name."
+                                placeholder="Пожалуйста, введите своё имя."
                                 validate={{ regexp: /^[a-z]/i }} />
                             <FormField
-                                label="Last Name"
+                                label="Фамилия"
                                 name="lastName"
                                 required
-                                placeholder="Please enter your last name."
+                                placeholder="Пожалуйста, введите свою фамилию."
                                 validate={{ regexp: /^[a-z]/i }} />
                             <FormField
                                 label="Email"
                                 name="email"
                                 type="email"
-                                placeholder="Please enter your email."
+                                placeholder="Пожалуйста, введите свой адрес электронной почты."
                                 required />
                             <FormField
-                                label="Schedule No"
+                                label="Номер расписания"
                                 name="schedule"
-                                placeholder="Please enter schedule number"
+                                placeholder="Пожалуйста, введите номер расписания"
                                 required />
                             <FormField
-                                label="Gender"
+                                label="Пол"
                                 name="gender"
-                                placeholder="Female or Male"
+                                placeholder="Мужчина или Женщина"
                                 required />
                             <FormField
-                                label="Password"
+                                label="Пароль"
                                 name="password"
                                 required
-                                placeholder="Please enter your password."
+                                placeholder="Пожалуйста, введите свой пароль."
                                 validate={{ regexp: /^(?=.{8,})(?=.*[0-9]{2})/, message: "@ least 8 characters containing 2 digits" }} />
                             <Box direction="row" align="center" >
                                 <Button
                                     style={{ textAlign: 'center' }}
-                                    label="Cancel"
+                                    label="Отмена"
                                     fill="horizontal"
                                     href="/" />
                                 <Button
-                                    label="Sign Up"
+                                    label="Зарегистрироваться"
                                     fill="horizontal"
                                     type="submit"
                                     primary />
