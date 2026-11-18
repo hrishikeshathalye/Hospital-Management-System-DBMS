@@ -167,10 +167,9 @@ app.get('/checklogin', (req, res) => {
   let email = params.email;
   let password = params.password;
   let sql_statement = `SELECT * FROM Patient 
-                       WHERE email="${email}" 
-                       AND password="${password}"`;
-  console.log(sql_statement);
-  con.query(sql_statement, function (error, results, fields) {
+                       WHERE email=? 
+                       AND password=?`;
+  con.query(sql_statement, [email, password], function (error, results, fields) {
     if (error) {
       console.log("error");
       return res.status(500).json({ failed: 'error ocurred' })
@@ -198,9 +197,8 @@ app.get('/checkDoclogin', (req, res) => {
   let password = params.password;
   let sql_statement = `SELECT * 
                        FROM Doctor
-                       WHERE email="${email}" AND password="${password}"`;
-  console.log(sql_statement);
-  con.query(sql_statement, function (error, results, fields) {
+                       WHERE email=? AND password=?`;
+  con.query(sql_statement, [email, password], function (error, results, fields) {
     if (error) {
       console.log("eror");
       return res.status(500).json({ failed: 'error ocurred' })
